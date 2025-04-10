@@ -990,8 +990,8 @@ function showSection(sectionId) {
     section.classList.remove('active');
   });
   document.getElementById(sectionId).classList.add('active');
-  if (window.location.href.includes('intocaded.github.io/articog')) {
-    window.history.pushState({}, '', `/articog/#${sectionId}`);
+  if (window.location.href.includes('uploadinto.github.io/gtreup/')) {
+    window.history.pushState({}, '', `/gtreup/#${sectionId}`);
     return;
   }
   window.history.pushState({}, '', `/#${sectionId}`);
@@ -1001,13 +1001,13 @@ function showSection(sectionId) {
 }
 window.addEventListener('load', () => {
   const rawHash = window.location.hash;
-  const hash = rawHash.replace('/articog/', '').slice(1) || 'home';
+  const hash = rawHash.replace('/gtreup/', '').slice(1) || 'home';
   showSection(hash);
   getGitHubDownloads();
 });
 window.addEventListener('popstate', () => {
   const rawHash = window.location.hash;
-  const hash = rawHash.replace('/articog/', '').slice(1) || 'home';
+  const hash = rawHash.replace('/gtreup/', '').slice(1) || 'home';
   showSection(hash);
 });
 function showPopup(src) {
