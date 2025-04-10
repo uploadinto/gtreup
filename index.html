@@ -218,6 +218,15 @@ body {
     background: linear-gradient(45deg, #3498db, #2980b9);
 }
 
+.btn-blue {
+    background: linear-gradient(45deg, #1565c0, #0d47a1);
+}
+
+.btn-red {
+    background: linear-gradient(45deg, #e53935, #b71c1c);
+}
+
+
 .btn-purple {
     background: linear-gradient(45deg, #9b59b6, #8e44ad);
 }
@@ -523,10 +532,17 @@ body {
         </div>
 
          <div style="margin-top: 30px; padding: 15px; background: var(--accent); border-radius: 8px; text-align: center;">
-            <h3 style="margin-bottom: 10px;">🎉 Nova Atualização disponível🎉</h3>
-            <p>Versão 11.0 chegou, mais cores e uns aprimoramentos. Veja o changelog</p>
-            <a href="#changelog" onclick="showSection('changelog')" style="color: white; text-decoration: underline; display: inline-block; margin-top: 10px;">Ver Changelog</a>
-        </div>
+    <h3 style="margin-bottom: 10px;">
+        NOVA ATUALIZAÇÃO 15.0 DISPONÍVEL!
+    </h3>
+    <a href="#changelog" onclick="showSection('changelog')" style="color: white; text-decoration: underline; display: block; margin-top: 10px;">
+        Ver Changelog
+    </a>
+    <a href="#downloads" onclick="showSection('downloads')" style="color: white; text-decoration: underline; display: block; margin-top: 5px;">
+        Baixar
+    </a>
+</div>
+
 
         <div style="margin-top: 40px; background: var(--secondary); padding: 20px; border-radius: 8px;">
             <i class="fas fa-download" style="font-size: 2em; color: var(--accent);"></i>
@@ -588,90 +604,121 @@ body {
             <div class="screenshots" id="blue-screenshots">
                 <h2>Mod Azul Original</h2>
                 <div class="screenshot-container" id="blue-full">
-                    <img src="https://i.ibb.co/zrCQD13/Screenshot-20250105-131504-Gartic.jpg" alt="Azul 1" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/py4VJwx/Screenshot-20250105-131510-Gartic.jpg" alt="Azul 2" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/VNq5Y1M/Screenshot-20250105-131520-Gartic.jpg" alt="Azul 3" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/pr2bv2r/Screenshot-20250105-131538-Gartic.jpg" alt="Azul 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/G2smsqQb/Screenshot-20250331-210610-Gartic-Original.jpg" alt="original 1" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/PJsrbY3Y/Screenshot-20250331-210615-Gartic-Original.jpg" alt="original 2" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/fTsRJ70h/Screenshot-20250331-210645-Gartic-Original.jpg" alt="original 3" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/SNGN8XWY/Screenshot-20250331-210659-Gartic-Original.jpg" alt="original 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/fT4CPzyC/Screenshot_20250403-210259_GarticOriginal.jpg" alt="original 5" onclick="showPopup(this.src)">
                 </div>
             </div>
 
             <div class="screenshots" id="purple-screenshots">
                 <h2>Mod Roxo</h2>
                 <div class="screenshot-container" id="purple-full">
-                    <img src="https://i.ibb.co/Ln9n4r7/Screenshot-20250105-134100-Gartic-Roxo.jpg" alt="Roxo 1" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/4jdDY23/Screenshot-20250105-134104-Gartic-Roxo.jpg" alt="Roxo 2" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/1v1yB9c/Screenshot-20250105-134110-Gartic-Roxo.jpg" alt="Roxo 3" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/0r9sMYN/Screenshot-20250105-134117-Gartic-Roxo.jpg" alt="Roxo 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/NFcB2YFx/Screenshot-20250331-210822-Gartic-Roxo.jpg" alt="roxo 1" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/FzVmjqJX/Screenshot-20250331-210835-Gartic-Roxo.jpg" alt="roxo 2" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/zXqqJJ9z/Screenshot-20250331-210839-Gartic-Roxo.jpg" alt="roxo 3" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/Dy5n09Tq/Screenshot-20250331-210851-Gartic-Roxo.jpg" alt="roxo 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/8CnBmDxh/Screenshot_20250403-210401_GarticRoxo.jpg" alt="roxo 5" onclick="showPopup(this.src)">
                 </div>
             </div>
 
             <div class="screenshots" id="black-screenshots">
                 <h2>Mod Dark</h2>
                 <div class="screenshot-container" id="black-full">
-                    <img src="https://i.ibb.co/8rtwgGm/Screenshot-20250105-133749-Gartic-Dark.jpg" alt="Preto 1" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/HzkQMpK/Screenshot-20250105-133755-Gartic-Dark.jpg" alt="Preto 2" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/K5xg5TW/Screenshot-20250105-133800-Gartic-Dark.jpg" alt="Preto 3" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/3TKrZm4/Screenshot-20250105-133806-Gartic-Dark.jpg" alt="Preto 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/hGtJhL6G/Screenshot-20250331-210426-Gartic-Dark.jpg" alt="dark 1" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/TwZhkZwy/Screenshot-20250331-210431-Gartic-Dark.jpg" alt="dark 2" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/NFmFZp9d/Screenshot-20250331-210435-Gartic-Dark.jpg" alt="dark 3" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/PfwCLr31/Screenshot-20250331-210442-Gartic-Dark.jpg" alt="dark 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/qqKL7Yb2/Screenshot_20250403-210222_GarticDark.jpg" alt="dark 5" onclick="showPopup(this.src)">
+                </div>
+            </div>
+            
+            <div class="screenshots" id="pink-screenshots">
+                <h2>Mod Blue</h2>
+                <div class="screenshot-container" id="blue-full">
+                    <img src="https://i.postimg.cc/QN2WSW96/Screenshot-20250331-210336-Gartic-Blue.jpg" alt="blue 1" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/sD5GLD53/Screenshot-20250331-210341-Gartic-Blue.jpg" alt="blue 2" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/4xZHRk1V/Screenshot-20250331-210347-Gartic-Blue.jpg" alt="blue 3" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/YC3GpnXV/Screenshot-20250331-210352-Gartic-Blue.jpg" alt="blue 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/KzRf64tq/Screenshot_20250403-210202_GarticBlue.jpg" alt="blue 5" onclick="showPopup(this.src)">
+                </div>
+            </div>
+            
+            <div class="screenshots" id="pink-screenshots">
+                <h2>Mod Red</h2>
+                <div class="screenshot-container" id="red-full">
+                    <img src="https://i.postimg.cc/k4xdmZsR/Screenshot-20250331-210947.jpg" alt="red 1" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/zv8YXj2t/Screenshot-20250331-210951.jpg" alt="red 2" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/VvgQSC3Y/Screenshot_20250331-210958.jpg" alt="red 3" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/MZm83CXh/Screenshot_20250331-211003.jpg" alt="red 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/qM8wVPCT/Screenshot_20250403-210332.jpg" alt="red 4" onclick="showPopup(this.src)">
                 </div>
             </div>
 
             <div class="screenshots" id="pink-screenshots">
                 <h2>Mod Rosa</h2>
                 <div class="screenshot-container" id="pink-full">
-                    <img src="https://i.ibb.co/L6YC4cq/Screenshot-20250105-134015-Gartic-Rosa.jpg" alt="Rosa 1" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/sgChDGf/Screenshot-20250105-134018-Gartic-Rosa.jpg" alt="Rosa 2" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/4MnJSq6/Screenshot-20250105-134027-Gartic-Rosa.jpg" alt="Rosa 3" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/Y8qzBZd/Screenshot-20250105-134051-Gartic-Rosa.jpg" alt="Rosa 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/JznmkprS/Screenshot-20250331-210904-Gartic-Rosa.jpg" alt="rosa 1" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/X72649fL/Screenshot_20250331-211142_GarticRosa.jpg" alt="rosa 2" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/5tQVPjF3/Screenshot-20250331-210926-Gartic-Rosa.jpg" alt="rosa 3" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/LXdMGRtM/Screenshot-20250331-210936-Gartic-Rosa.jpg" alt="rosa 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/g00Hhrtz/Screenshot_20250403-210346_GarticRosa.jpg" alt="rosa 5" onclick="showPopup(this.src)">
                 </div>
             </div>
 
             <div class="screenshots" id="green-screenshots">
                 <h2>Mod Verde</h2>
                 <div class="screenshot-container" id="green-full">
-                    <img src="https://i.ibb.co/5cMMQmh/Screenshot-20250105-134127-Gartic-Verde.jpg" alt="Verde 1" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/0sF7sqb/Screenshot-20250105-134131-Gartic-Verde.jpg" alt="Verde 2" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/2WhyqTP/Screenshot-20250105-134138-Gartic-Verde.jpg" alt="Verde 3" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/QXGMHdL/Screenshot-20250105-134150-Gartic-Verde.jpg" alt="Verde 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/wjTxk6Vf/Screenshot-20250331-210734-Gartic-Verde.jpg" alt="verde 1" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/qvbJb9Dk/Screenshot-20250331-210748-Gartic-Verde.jpg" alt="verde 2" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/R02M9wzy/Screenshot-20250331-210753-Gartic-Verde.jpg" alt="verde 3" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/4dtX3nfd/Screenshot-20250331-210805-Gartic-Verde.jpg" alt="verde 4" onclick="showPopup(this.src)">                   
+                    <img src="https://i.postimg.cc/wjTxk6Vf/Screenshot-20250331-210734-Gartic-Verde.jpg" alt="verde 5" onclick="showPopup(this.src)">
                 </div>
             </div>
 
             <div class="screenshots" id="cyan-screenshots">
                 <h2>Mod Abyss</h2>
                 <div class="screenshot-container" id="cyan-full">
-                    <img src="https://i.ibb.co/s3VxJ0P/Screenshot-20250105-133906-Gartic-Navy.jpg" alt="Abyss 1" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/YZyMSVf/Screenshot-20250105-133910-Gartic-Navy.jpg" alt="Abyss 2" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/GtxnQZq/Screenshot-20250105-133901-Gartic-Navy.jpg" alt="Abyss 3" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/Y8QPCy7/Screenshot-20250105-133923-Gartic-Navy.jpg" alt="Abyss 4" onclick="showPopup(this.src)">
+                    <img src="hhttps://i.postimg.cc/rF4wpnpj/Screenshot-20250331-210143-Gartic-Abyss.jpg" alt="abyss 1" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/XY07BfGb/Screenshot-20250331-210148-Gartic-Abyss.jpg" alt="abyss 2" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/y8X6mDcS/Screenshot-20250331-210154-Gartic-Abyss.jpg" alt="abyss 3" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/GpLLqbxg/Screenshot-20250331-210206-Gartic-Abyss.jpg" alt="abyss 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/DzC5p144/Screenshot_20250403-210127_GarticAbyss.jpg" alt="abyss 5" onclick="showPopup(this.src)">
                 </div>
             </div>
 
             <div class="screenshots" id="brown-screenshots">
                 <h2>Mod Marrom</h2>
                 <div class="screenshot-container" id="brown-full">
-                    <img src="https://i.ibb.co/xD4xKcn/Screenshot-20250105-133822-Gartic-Marrom.jpg" alt="Marrom 1" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/vqZ4cCy/Screenshot-20250105-133827-Gartic-Marrom.jpg" alt="Marrom 2" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/HhGsZGQ/Screenshot-20250105-133847-Gartic-Marrom.jpg" alt="Marrom 3" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/8KhM10b/Screenshot-20250105-133835-Gartic-Marrom.jpg" alt="Marrom 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/fT7kKqhL/Screenshot-20250331-210509-Gartic-Marrom.jpg" alt="marrom 1" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/y8VxrhVT/Screenshot-20250331-210515-Gartic-Marrom.jpg" alt="marrom 2" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/htpvFJvR/Screenshot-20250331-210522-Gartic-Marrom.jpg" alt="marrom 3" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/Gpt2bcT8/Screenshot-20250331-210530-Gartic-Marrom.jpg" alt="marrom 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/05KZZMkr/Screenshot_20250403-210242_GarticMarrom.jpg" alt="marrom 5" onclick="showPopup(this.src)">
                 </div>
             </div>
 
             <div class="screenshots" id="true-black-screenshots">
                 <h2>Mod Preto</h2>
                 <div class="screenshot-container" id="true-black-full">
-                    <img src="https://i.ibb.co/rsvNsM1/Screenshot-20250105-133950-Gartic-Preto.jpg" alt="Preto 1" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/Wk1XrDb/Screenshot-20250105-133954-Gartic-Preto.jpg" alt="Preto 2" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/MPbj9CG/Screenshot-20250105-133940-Gartic-Preto.jpg" alt="Preto 3" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/K98nzZ3/Screenshot-20250105-134004-Gartic-Preto.jpg" alt="Preto 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/sgvdX1Kr/Screenshot_20250331-211440_GarticPreto.jpg" alt="preto 1" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/KYM6PVdp/Screenshot_20250331-211454_GarticPreto.jpg" alt="preto 2" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/qq3jthgN/Screenshot_20250331-213916_GarticPreto.jpg" alt="preto 3" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/SsbwDd4S/Screenshot_20250331-211505_GarticPreto.jpg" alt="preto 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/Dwng2xqb/Screenshot_20250403-210316_GarticPreto.jpg" alt="preto 5" onclick="showPopup(this.src)">
                 </div>
             </div>
 
             <div class="screenshots" id="akatsuki-screenshots">
                 <h2>Mod Naruto Akatsuki</h2>
                 <div class="screenshot-container" id="akatsuki-full">
-                    <img src="https://i.ibb.co/tpQstCW/Screenshot-20250105-133704.jpg" alt="Akatsuki 1" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/X82gZXf/Screenshot-20250105-133708.jpg" alt="Akatsuki 2" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/hY19Z7g/Screenshot-20250105-133713.jpg" alt="Akatsuki 3" onclick="showPopup(this.src)">
-                    <img src="https://i.ibb.co/VwSLxyh/Screenshot-20250105-133732.jpg" alt="Akatsuki 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/sX1VCK8p/Screenshot-20250331-210236.jpg" alt="akatsuki 1" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/50Gf4LdD/Screenshot-20250331-210243.jpg" alt="akatsuki 2" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/7h2wfhqh/Screenshot-20250331-210250.jpg" alt="akatsuki 3" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/9XR7GBMR/Screenshot-20250331-210258.jpg" alt="akatsuki 4" onclick="showPopup(this.src)">
+                    <img src="https://i.postimg.cc/hj6scgrS/Screenshot_20250403-210143.jpg" alt="akatsuki 5" onclick="showPopup(this.src)">
                 </div>
             </div>
         </div>
@@ -704,6 +751,24 @@ body {
                 <h2>Mod Dark</h2>
                 <div class="download-buttons">
                     <a href="https://github.com/intocaded/intoarchiv/releases/download/intoc/GarticDARK11.0.apk" class="download-btn btn-dark">
+                        <span>Vers&#xe3;o 15.0</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="download-item">
+                <h2>Mod Blue</h2>
+                <div class="download-buttons">
+                    <a href="https://github.com/intocaded/intoarchiv/releases/download/intoc/GarticROSA11.0.apk" class="download-btn btn-blue">
+                        <span>Vers&#xe3;o 15.0</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="download-item">
+                <h2>Mod Red</h2>
+                <div class="download-buttons">
+                    <a href="https://github.com/intocaded/intoarchiv/releases/download/intoc/GarticROSA11.0.apk" class="download-btn btn-red">
                         <span>Vers&#xe3;o 15.0</span>
                     </a>
                 </div>
