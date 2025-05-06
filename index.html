@@ -538,7 +538,7 @@ body {
 
 <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #7b2ff7, #f107a3); border-radius: 12px; text-align: center; color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.2); animation: pulse 2s infinite;">
   <h3 style="margin-bottom: 10px; font-size: 1.5em;">
-    ✅ ATUALIZAÇÃO 17.0 DISPONÍVEL!!!
+    ✅ ATUALIZAÇÃO 17.0 FINAL DISPONÍVEL!!!
   </h3>
   <a href="#changelog" onclick="showSection('changelog')" style="color: white; text-decoration: underline; display: block; margin-top: 10px;">
     Ver Notas de Lançamento
@@ -914,6 +914,15 @@ body {
 </ul>
 </div>
 
+  <div class="faq-item">
+                <h3>Versão 16.0 - Importante</h3>
+                <ul style="list-style-type: disc; margin-left: 20px;">
+                    <li>Novo link do site em botão ATUALIZE em Opções.</li>
+                    <li>Adicionado liberação da conta no log do ban.</li>
+                    <li>Novos temas estrangeiros em Criar sala.</li>
+                    <li>Melhorias de Desempenho.</li>
+                </ul>
+        </div>
         
         <div class="faq-item">
                 <h3>Versão 15.0 - Grande atualização</h3>
@@ -1077,8 +1086,7 @@ async function getGitHubDownloads() {
     const response = await fetch('https://api.github.com/repos/intocaded/intoarchiv/releases');
     const data = await response.json();
 
-
-    let totalDownloads = 2598;
+    let totalDownloads = 2598; // valor fixo inicial
 
     data.forEach(release => {
       if (Array.isArray(release.assets)) {
@@ -1093,8 +1101,9 @@ async function getGitHubDownloads() {
     }
   } catch (error) {
     console.error('Erro ao buscar downloads do GitHub:', error);
+    const downloadsDiv = document.querySelector('#downloads-count');
     if (downloadsDiv) {
-      downloadsDiv.textContent = 'Erro ao atualizar';
+      downloadsDiv.textContent = 'Erro ao atualizar. Valor fixo: ' + 2598.toLocaleString() + ' downloads';
     }
   }
 }
@@ -1145,21 +1154,18 @@ document.querySelectorAll('.sidebar a').forEach(link => {
   });
 });
 
-
 window.addEventListener('load', () => {
   const rawHash = window.location.hash;
   const hash = rawHash.replace('/gtreup/', '').slice(1) || 'home';
   showSection(hash);
-  getGitHubDownloads();
+  getGitHubDownloads(); // Chama imediatamente
 });
-
 
 window.addEventListener('popstate', () => {
   const rawHash = window.location.hash;
   const hash = rawHash.replace('/gtreup/', '').slice(1) || 'home';
   showSection(hash);
 });
-
 
 document.addEventListener('click', e => {
   const sidebar = document.querySelector('.sidebar');
@@ -1174,7 +1180,4 @@ document.addEventListener('click', e => {
     toggleNav();
   }
 });
-
-
-setInterval(getGitHubDownloads, 20 * 60 * 1000);
 </script>
