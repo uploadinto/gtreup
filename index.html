@@ -1,5 +1,3 @@
-
-
 <html>
 <head>
   <base href="/gtreup/">
@@ -550,8 +548,21 @@ body {
   <a href="#downloads" onclick="showSection('downloads')" style="color: white; text-decoration: underline; display: block; margin-top: 5px;">
     Baixar
   </a>
-  
 </div>
+
+
+<div style="margin-top: 20px; padding: 15px; background: linear-gradient(135deg, #ff9800, #ff5722); border-radius: 12px; text-align: center; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+  ⚠️ Em breve será lançada uma atualização com correções de bugs!
+  reportada pelos usuários.
+</div>
+
+
+<div style="margin-top: 20px; padding: 15px; background: linear-gradient(135deg, #00c9ff, #92fe9d); border-radius: 12px; text-align: center; color: #000; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+  <a href="#faqs" onclick="showSection('faqs')" style="color: black; text-decoration: underline; font-weight: bold;">
+    ❓ Ver Novas Perguntas Frequentes (FAQs)
+  </a>
+</div>
+
 
 
 
@@ -607,6 +618,11 @@ body {
                 <li>Criar conta ficou mais pr&#xe1;tico.</li>
                 <li>Criar sala com todas as informa&#xe7;&#xf5;es de uma vez.</li>
             </ul>
+            <h3>
+  <a href="#changelog" onclick="showSection('changelog')" style="color: #7b2ff7; text-decoration: underline;">
+    📌 Veja mais recursos 
+  </a>
+</h3>
         </div>
     </section>
 
@@ -900,6 +916,16 @@ body {
         <p>Os anúncios foram removidos porque estavam em formato flutuante, atrapalhando a navegação e a jogabilidade. Fora isso, todas as demais funções seguem conforme o aplicativo oficial.</p>
     </div>
 
+<div class="faq-item">
+    <h3>Por que não é possível salvar os desenhos?</h3>
+    <p>Não é possível salvar os desenhos porque o servidor do Gartic Mobile não envia a solicitação para o site salvar no mural do jogo.</p>
+</div>
+
+<div class="faq-item">
+    <h3>É Possível abrir o chat na tela de desenhar?</h3>
+    <p>O chat não abre nessa tela porque a interface e o layout quebram facilmente quando o teclado está aberto, comprometendo a experiência do usuário.</p>
+</div>
+
     <div class="faq-item">
         <h3>O app não instala ou aparece erro?</h3>
         <p>Caso o app não instale ou apareça a mensagem "App não instalado", tente novamente. É necessário pausar o Play Protect temporariamente durante a instalação.</p>
@@ -1128,7 +1154,7 @@ async function getGitHubDownloads() {
       }
     });
 
-    totalDownloads += 3291;
+    totalDownloads += 3391 // VALOR FIXO PQ O GARTIC DERRUBAVA OS SITES ANTERIORES, MAS DEU PRA SALVAR A CONTAGEM.
 
     if (downloadsDiv) {
       downloadsDiv.textContent = totalDownloads.toLocaleString() + ' downloads';
