@@ -489,6 +489,75 @@ body {
   50% { transform: scale(1.02); }
   100% { transform: scale(1); }
 }
+.install-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.step {
+    background-color: var(--secondary);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.step h3 {
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+
+.step-image-container {
+    width: 100%;
+    max-height: 400px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #000;
+}
+
+.step-image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.step-image-container img:hover {
+    transform: scale(1.02);
+}
+
+.step p {
+    text-align: left;
+    padding: 0 10px;
+}
+
+@media (max-width: 768px) {
+    .install-steps {
+        gap: 20px;
+    }
+    
+    .step {
+        padding: 15px;
+    }
+    
+    .step-image-container {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .step-image-container {
+        max-height: 250px;
+    }
+}
 </style>
 </head>
 <body>
@@ -505,6 +574,7 @@ body {
     <a href="javascript:void(0)" onclick="showSection(&apos;resources&apos;)"><i class="fas fa-cube"></i> Recursos</a>
     <a href="javascript:void(0)" onclick="showSection(&apos;screenshots&apos;)"><i class="fas fa-images"></i> Screenshots</a>
     <a href="javascript:void(0)" onclick="showSection(&apos;downloads&apos;)"><i class="fas fa-download"></i> Downloads</a>
+    <a href="javascript:void(0)" onclick="showSection('install')"><i class="fas fa-cog"></i> Como Instalar</a>
     <a href="javascript:void(0)" onclick="showSection(&apos;faqs&apos;)"><i class="fas fa-question-circle"></i> FAQs</a>
     <a href="javascript:void(0)" onclick="showSection(&apos;changelog&apos;)"><i class="fas fa-history"></i> Changelog</a>
     <div style="margin-top: auto; padding: 15px; font-size: 14px; opacity: 0.7;">Desenvolvido por Intocado</div>
@@ -787,6 +857,144 @@ body {
       </div>
     </div>
   </div>
+</section>
+
+<!-- CSS Adicional -->
+<style>
+.install-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.step {
+    background-color: var(--secondary);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.step h3 {
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+
+.step-image-container {
+    width: 100%;
+    max-height: 400px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #000;
+}
+
+.step-image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.step-image-container img:hover {
+    transform: scale(1.02);
+}
+
+.step p {
+    text-align: left;
+    padding: 0 10px;
+}
+
+@media (max-width: 768px) {
+    .install-steps {
+        gap: 20px;
+    }
+    
+    .step {
+        padding: 15px;
+    }
+    
+    .step-image-container {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .step-image-container {
+        max-height: 250px;
+    }
+}
+</style>
+
+<section id="install">
+    <h1>Como Instalar</h1>
+    <p>Siga estas etapas simples para instalar os mods do Gartic no seu dispositivo Android.</p>
+    
+    <div class="install-steps">
+        <div class="step">
+            <h3>Passo 1: Baixe o Arquivo e clique e se aparecer isto abaixo</h3>
+            <div class="step-image-container">
+                <img src="https://i.postimg.cc/SKwDBndw/1.png" alt="Passo 1" onclick="showPopup(this.src)">
+            </div>
+            <p>Clique em Configurações para ir na tela de Instalar apps desconhecidos.</p>
+        </div>
+        
+        <div class="step">
+            <h3>Passo 2: Permita instalações de fontes desconhecidas</h3>
+            <div class="step-image-container">
+                <img src="https://i.postimg.cc/vZ2PvqV8/2.png" alt="Passo 2" onclick="showPopup(this.src)">
+            </div>
+            <p>Ative e vai aparecer outro alerta.</p>
+        </div>
+        
+        <div class="step">
+            <h3>Passo 3: Agora pode instalar</h3>
+            <div class="step-image-container">
+                <img src="https://i.postimg.cc/7YVt5YP2/3.png" alt="Passo 3" onclick="showPopup(this.src)">
+            </div>
+            <p>Durante a instalação, pode ser que apareça um alerta do Play Protect da Play Store</p>
+        </div>
+        
+        <div class="step">
+            <h3>Passo 4: Play Protect, Como passar dele</h3>
+            <div class="step-image-container">
+                <img src="https://i.postimg.cc/VNSKZqqq/4.png" alt="Passo 4" onclick="showPopup(this.src)">
+            </div>
+            <p>Normal aparecer esse aviso, todo tipo de aplicativo baixado fora, vai aparecer o alerta. Você tem que clicar em "Mais detalhes".</p>
+        </div>
+        
+        <div class="step">
+            <h3>Passo 5: Play Protect, permitindo instalação</h3>
+            <div class="step-image-container">
+                <img src="https://i.postimg.cc/kgg1K3Dh/5.png" alt="Passo 5" onclick="showPopup(this.src)">
+            </div>
+            <p>Clica em "Instalar mesmo assim".</p>
+        </div>
+        
+        <div class="step">
+            <h3>Passo 6: Instalação concluída</h3>
+            <div class="step-image-container">
+                <img src="https://i.postimg.cc/85MtNTns/6.png" alt="Passo 6" onclick="showPopup(this.src)">
+            </div>
+            <p>Se aparecer qualquer tipo de aviso, pause temporariamente o Play Protect nas configurações do Google Play.</p>
+        </div>
+    </div>
+    
+    <div class="install-notes">
+        <h3>Observações importantes:</h3>
+        <ul>
+            <li>Não é necessário desinstalar o aplicativo original do Gartic</li>
+            <li>O mod funciona independentemente do aplicativo oficial</li>
+            <li>Atualizações são lançadas periodicamente - fique atento!</li>
+            <li>Se tiver problemas, desinstale versões anteriores antes de instalar a nova</li>
+        </ul>
+    </div>
 </section>
 
     <section id="faqs">
@@ -1353,4 +1561,3 @@ document.addEventListener('click', e => {
 setInterval(getGitHubDownloads, 30000);
 setInterval(loadAndSortMods, 30 * 60 * 1000);
 </script>
-      
