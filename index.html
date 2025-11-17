@@ -1,3 +1,4 @@
+
 <html>
 <head>
   <base href="/gtreup/">
@@ -6,7 +7,7 @@
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4727/4727480.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
+ <style>
 * {
     margin: 0;
     padding: 0;
@@ -88,7 +89,6 @@ body {
     display: block;
 }
 
-
 .logo {
     text-align: center;
     font-size: 24px;
@@ -118,8 +118,8 @@ body {
 
 .screenshot-container {
     display: flex;
-    flex-wrap: nowrap; 
-    justify-content: flex-start; 
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: 5px;
     overflow-x: auto;
     padding: 10px 0;
@@ -128,7 +128,7 @@ body {
 }
 
 .screenshot-container img {
-    flex: 0 0 auto; 
+    flex: 0 0 auto;
     max-width: calc(25% - 10px);
     scroll-snap-align: start;
     margin: 5px;
@@ -136,18 +136,6 @@ body {
     cursor: pointer;
     transition: transform 0.3s;
     height: auto;
-}
-
-@media (max-width: 768px) {
-    .screenshot-container {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-    }
-    
-    .screenshot-container img {
-        max-width: calc(50% - 10px);
-        flex: 0 0 auto;
-    }
 }
 
 .screenshot-container {
@@ -229,7 +217,6 @@ body {
     background: linear-gradient(45deg, #e53935, #b71c1c);
 }
 
-
 .btn-purple {
     background: linear-gradient(45deg, #9b59b6, #381547);
 }
@@ -255,7 +242,7 @@ body {
 }
 
 .btn-true-black {
-    background: linear-gradient(45deg, #000000, #212121); 
+    background: linear-gradient(45deg, #000000, #212121);
 }
 
 .btn-akatsuki {
@@ -295,8 +282,8 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    width: 120px; 
-    text-align: center; 
+    width: 120px;
+    text-align: center;
 }
 
 .feature-icon i {
@@ -305,27 +292,9 @@ body {
 }
 
 .feature-icon span {
-    width: 100%; 
-    font-size: 14px; 
-    line-height: 1.2; 
-}
-
-@media (max-width: 768px) {
-    .feature-icons {
-        gap: 20px;
-    }
-    
-    .feature-icon {
-        width: 100px; 
-    }
-    
-    .feature-icon i {
-        font-size: 2rem;
-    }
-    
-    .feature-icon span {
-        font-size: 12px;
-    }
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.2;
 }
 
 .faq-item {
@@ -371,14 +340,95 @@ body {
     margin-bottom: 15px;
 }
 
+.install-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.step {
+    background-color: var(--secondary);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.step h3 {
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+
+.step-image-container {
+    width: 100%;
+    max-width: 280px;
+    margin: 15px auto;
+    text-align: center;
+}
+
+.step-image-container img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.3s;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.step-image-container img:hover {
+    transform: scale(1.02);
+}
+
+.step p {
+    text-align: left;
+    padding: 0 10px;
+    color: #ccc;
+    line-height: 1.5;
+}
+
+.install-notes {
+    background: #2d2d2d;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+    margin-top: 30px;
+    text-align: left;
+}
+
+.install-notes h3 {
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+
+.install-notes ul {
+    color: #ccc;
+    padding-left: 20px;
+}
+
+.install-notes li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
 @media (max-width: 768px) {
     .content {
         padding: 70px 10px 10px;
         width: 100%;
     }
     
-    .screenshots img {
-        max-width: calc(50% - 10px); 
+    .screenshot-container img {
+        max-width: calc(50% - 10px);
     }
     
     .screenshot-container {
@@ -390,10 +440,6 @@ body {
         margin: 10px 0;
     }
     
-    .screenshot-container {
-        text-align: center;
-    }
-
     h1 {
         font-size: 24px;
         margin-bottom: 15px;
@@ -410,7 +456,7 @@ body {
     }
     
     .sidebar {
-        width: 80%; 
+        width: 80%;
         left: -80%;
     }
     
@@ -464,11 +510,27 @@ body {
     .feature-icon span {
         font-size: 12px;
     }
+    
+    .install-steps {
+        gap: 20px;
+    }
+    
+    .step {
+        padding: 15px;
+    }
+    
+    .step-image-container {
+        max-width: 220px;
+    }
+    
+    .step-image-container img {
+        max-height: 400px;
+    }
 }
 
-@media (max-width: 320px) {
-    .screenshots img {
-        max-width: calc(50% - 10px); 
+@media (max-width: 480px) {
+    .screenshot-container img {
+        max-width: calc(50% - 10px);
         margin: 5px 0;
     }
     
@@ -484,86 +546,46 @@ body {
         width: 90%;
         left: -90%;
     }
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
-}
-.install-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    margin: 30px 0;
-}
-
-.step {
-    background-color: var(--secondary);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.step h3 {
-    color: var(--accent);
-    margin-bottom: 15px;
-}
-
-.step-image-container {
-    width: 100%;
-    max-height: 400px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    background-color: #000;
-}
-
-.step-image-container img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-
-.step-image-container img:hover {
-    transform: scale(1.02);
-}
-
-.step p {
-    text-align: left;
-    padding: 0 10px;
-}
-
-@media (max-width: 768px) {
-    .install-steps {
-        gap: 20px;
+    
+    .step-image-container {
+        max-width: 180px;
     }
     
-    .step {
-        padding: 15px;
+    .step-image-container img {
+        max-height: 350px;
+    }
+    
+    .download-buttons {
+        gap: 10px;
+    }
+    
+    .download-buttons .download-btn {
+        min-width: 120px;
+        padding: 12px 20px;
+    }
+}
+
+@media (max-width: 320px) {
+    .screenshot-container img {
+        max-width: calc(50% - 5px);
     }
     
     .step-image-container {
-        max-height: 300px;
+        max-width: 160px;
     }
-}
-
-@media (max-width: 480px) {
-    .step-image-container {
-        max-height: 250px;
+    
+    .download-buttons .download-btn {
+        min-width: 100px;
+        padding: 10px 15px;
     }
-}
-  @media (max-width: 768px) {
-  .step-image-container img {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
+    
+    .download-btn:before {
+        font-size: 14px;
+    }
+    
+    .download-btn span {
+        font-size: 12px;
+    }
 }
 </style>
 </head>
