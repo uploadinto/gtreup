@@ -1,1654 +1,320 @@
-
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <base href="/gtreup/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>G Mod</title>
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4727/4727480.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
- <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-:root {
-    --primary: #1a1a1a;
-    --secondary: #2d2d2d;
-    --accent: #1c7071;
-    --text: #ffffff;
-}
-
-body {
-    background-color: var(--primary);
-    color: var(--text);
-    text-align: center;
-}
-
-.nav-toggle {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    cursor: pointer;
-    z-index: 1000;
-    padding: 10px;
-}
-
-.nav-toggle span {
-    display: block;
-    width: 28px;
-    height: 3px;
-    background-color: var(--text);
-    margin: 5px 0;
-    transition: 0.4s;
-}
-
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: -250px;
-    height: 100vh;
-    width: 250px;
-    background-color: var(--secondary);
-    transition: 0.4s;
-    z-index: 999;
-    padding-top: 60px;
-}
-
-.sidebar.active {
-    left: 0;
-}
-
-.sidebar a {
-    display: block;
-    padding: 15px 25px;
-    color: var(--text);
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.sidebar a:hover {
-    background-color: var(--accent);
-}
-
-.content {
-    padding: 70px 20px 20px;
-    transition: 0.4s;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.content section {
-    display: none;
-}
-
-.content section.active {
-    display: block;
-}
-
-.logo {
-    text-align: center;
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--accent);
-    margin-bottom: 30px;
-}
-
-.developer {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    font-size: 14px;
-    opacity: 0.7;
-}
-
-.screenshots {
-    margin: 20px 0;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: var(--secondary);
-}
-
-.screenshots h2 {
-    margin-bottom: 15px;
-}
-
-.screenshot-container {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 5px;
-    overflow-x: auto;
-    padding: 10px 0;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-}
-
-.screenshot-container img {
-    flex: 0 0 auto;
-    max-width: calc(25% - 10px);
-    scroll-snap-align: start;
-    margin: 5px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.3s;
-    height: auto;
-}
-
-.screenshot-container {
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent) var(--secondary);
-}
-
-.screenshot-container::-webkit-scrollbar {
-    height: 6px;
-}
-
-.screenshot-container::-webkit-scrollbar-track {
-    background: var(--secondary);
-    border-radius: 3px;
-}
-
-.screenshot-container::-webkit-scrollbar-thumb {
-    background: var(--accent);
-    border-radius: 3px;
-}
-
-.download-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-}
-
-.download-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.download-buttons {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.download-buttons .download-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 15px 30px;
-    border-radius: 25px;
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    min-width: 140px;
-    text-align: center;
-    transition: transform 0.3s, opacity 0.3s;
-    gap: 5px;
-}
-
-.download-btn:before {
-    content: "Baixar";
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.download-btn span {
-    font-size: 14px;
-    font-weight: 400;
-}
-
-.btn-original {
-    background: linear-gradient(45deg, #3498db, #2980b9);
-}
-
-.btn-blue {
-    background: linear-gradient(45deg, #1a3689, #1b2381);
-}
-
-.btn-red {
-    background: linear-gradient(45deg, #e53935, #b71c1c);
-}
-
-.btn-purple {
-    background: linear-gradient(45deg, #9b59b6, #381547);
-}
-
-.btn-dark {
-    background: linear-gradient(45deg, #97a3a0, #212524);
-}
-
-.btn-pink {
-    background: linear-gradient(45deg, #e84393, #d81b60);
-}
-
-.btn-green {
-    background: linear-gradient(45deg, #27ae60, #219a52);
-}
-
-.btn-cyan {
-    background: linear-gradient(45deg, #0097a7, #006064);
-}
-
-.btn-brown {
-    background: linear-gradient(45deg, #795548, #5d4037);
-}
-
-.btn-true-black {
-    background: linear-gradient(45deg, #000000, #212121);
-}
-
-.btn-akatsuki {
-    background: linear-gradient(45deg, #941243, #b90e3d);
-}
-
-.popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1001;
-}
-
-.popup img {
-    max-width: 95%;
-    max-height: 90vh;
-    object-fit: contain;
-    border-radius: 8px;
-}
-
-.feature-icons {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-    margin: 30px 0;
-}
-
-.feature-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    width: 120px;
-    text-align: center;
-}
-
-.feature-icon i {
-    font-size: 2.5rem;
-    color: var(--accent);
-}
-
-.feature-icon span {
-    width: 100%;
-    font-size: 14px;
-    line-height: 1.2;
-}
-
-.faq-item {
-    text-align: left;
-    background: var(--secondary);
-    padding: 15px;
-    border-radius: 8px;
-    margin: 10px 0;
-}
-
-.faq-item h3 {
-    color: var(--accent);
-    margin-bottom: 10px;
-}
-
-.resources-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin: 20px 0;
-}
-
-.resource-card {
-    background: var(--secondary);
-    padding: 20px;
-    border-radius: 8px;
-    text-align: left;
-}
-
-.resource-card h3 {
-    color: var(--accent);
-    margin-bottom: 10px;
-}
-
-#resources ul li {
-    margin-bottom: 10px;
-    color: var(--text);
-    line-height: 1.4;
-}
-
-#resources h3 {
-    color: var(--accent);
-    margin-bottom: 15px;
-}
-
-.install-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    margin: 30px 0;
-}
-
-.step {
-    background-color: var(--secondary);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.step h3 {
-    color: var(--accent);
-    margin-bottom: 15px;
-}
-
-.step-image-container {
-    width: 100%;
-    max-width: 280px;
-    margin: 15px auto;
-    text-align: center;
-}
-
-.step-image-container img {
-    width: 100%;
-    height: auto;
-    max-height: 500px;
-    object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    cursor: pointer;
-    transition: transform 0.3s;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
-.step-image-container img:hover {
-    transform: scale(1.02);
-}
-
-.step p {
-    text-align: left;
-    padding: 0 10px;
-    color: #ccc;
-    line-height: 1.5;
-}
-
-.install-notes {
-    background: #2d2d2d;
-    padding: 20px;
-    border-radius: 8px;
-    border-left: 4px solid var(--accent);
-    margin-top: 30px;
-    text-align: left;
-}
-
-.install-notes h3 {
-    color: var(--accent);
-    margin-bottom: 15px;
-}
-
-.install-notes ul {
-    color: #ccc;
-    padding-left: 20px;
-}
-
-.install-notes li {
-    margin-bottom: 8px;
-    line-height: 1.4;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
-}
-
-@media (max-width: 768px) {
-    .content {
-        padding: 70px 10px 10px;
-        width: 100%;
-    }
-    
-    .screenshot-container img {
-        max-width: calc(50% - 10px);
-    }
-    
-    .screenshot-container {
-        gap: 5px;
-    }
-    
-    .screenshots {
-        padding: 10px;
-        margin: 10px 0;
-    }
-    
-    h1 {
-        font-size: 24px;
-        margin-bottom: 15px;
-    }
-    
-    h2 {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-    
-    p {
-        font-size: 14px;
-        line-height: 1.4;
-    }
-    
-    .sidebar {
-        width: 80%;
-        left: -80%;
-    }
-    
-    .nav-toggle {
-        padding: 8px;
-    }
-    
-    .nav-toggle span {
-        width: 24px;
-        height: 2px;
-        margin: 4px 0;
-    }
-    
-    .download-btn {
-        width: 100%;
-        padding: 12px 15px;
-        font-size: 14px;
-        margin: 8px 0;
-    }
-    
-    .logo {
-        font-size: 20px;
-        margin-bottom: 20px;
-    }
-    
-    .sidebar a {
-        padding: 12px 20px;
-        font-size: 16px;
-    }
-    
-    .popup img {
-        max-width: 95%;
-        max-height: 95vh;
-        object-fit: contain;
-    }
-    
-    .developer {
-        bottom: 10px;
-        right: 10px;
-        font-size: 12px;
-    }
-    
-    .feature-icons {
-        gap: 20px;
-    }
-    
-    .feature-icon i {
-        font-size: 2rem;
-    }
-    
-    .feature-icon span {
-        font-size: 12px;
-    }
-    
-    .install-steps {
-        gap: 20px;
-    }
-    
-    .step {
-        padding: 15px;
-    }
-    
-    .step-image-container {
-        max-width: 220px;
-    }
-    
-    .step-image-container img {
-        max-height: 400px;
-    }
-}
-
-@media (max-width: 480px) {
-    .screenshot-container img {
-        max-width: calc(50% - 10px);
-        margin: 5px 0;
-    }
-    
-    h1 {
-        font-size: 20px;
-    }
-    
-    h2 {
-        font-size: 18px;
-    }
-    
-    .sidebar {
-        width: 90%;
-        left: -90%;
-    }
-    
-    .step-image-container {
-        max-width: 180px;
-    }
-    
-    .step-image-container img {
-        max-height: 350px;
-    }
-    
-    .download-buttons {
-        gap: 10px;
-    }
-    
-    .download-buttons .download-btn {
-        min-width: 120px;
-        padding: 12px 20px;
-    }
-}
-
-@media (max-width: 320px) {
-    .screenshot-container img {
-        max-width: calc(50% - 5px);
-    }
-    
-    .step-image-container {
-        max-width: 160px;
-    }
-    
-    .download-buttons .download-btn {
-        min-width: 100px;
-        padding: 10px 15px;
-    }
-    
-    .download-btn:before {
-        font-size: 14px;
-    }
-    
-    .download-btn span {
-        font-size: 12px;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecionando para GTC Mod</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a0b2e 50%, #0d1f2d 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .background-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: #00ffcc;
+            top: -100px;
+            left: -100px;
+        }
+        
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: #9d4edd;
+            bottom: -50px;
+            right: 20%;
+        }
+        
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: #00ff88;
+            top: 30%;
+            right: -50px;
+        }
+        
+        .shape-4 {
+            width: 250px;
+            height: 250px;
+            background: #5a189a;
+            bottom: 10%;
+            left: 10%;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(15, 15, 35, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(157, 78, 221, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #00ffcc, #9d4edd, #00ff88);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: pulse 2s infinite;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #00ffcc, #9d4edd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            color: #c8c8e6;
+        }
+        
+        .countdown {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .countdown-number {
+            background: rgba(157, 78, 221, 0.2);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: #00ffcc;
+            min-width: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(90deg, #00ff88, #00ffcc);
+            color: #0f0f23;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+            margin-top: 10px;
+        }
+        
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.5);
+        }
+        
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .feature {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px;
+            background: rgba(157, 78, 221, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(157, 78, 221, 0.3);
+        }
+        
+        .feature i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #00ffcc;
+        }
+        
+        .feature h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #9d4edd;
+        }
+        
+        .feature p {
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00ffcc);
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                font-size: 3rem;
+            }
+            
+            .features {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<div class="nav-toggle" onclick="toggleNav()">
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
-
-<nav class="sidebar">
-    <div class="logo">Gartic Mod</div>
-    <a href="javascript:void(0)" onclick="showSection(&apos;home&apos;)"><i class="fas fa-home"></i> P&#xe1;gina Inicial</a>
-    <a href="javascript:void(0)" onclick="showSection(&apos;resources&apos;)"><i class="fas fa-cube"></i> Recursos</a>
-    <a href="javascript:void(0)" onclick="showSection(&apos;screenshots&apos;)"><i class="fas fa-images"></i> Screenshots</a>
-    <a href="javascript:void(0)" onclick="showSection(&apos;downloads&apos;)"><i class="fas fa-download"></i> Downloads</a>
-    <a href="javascript:void(0)" onclick="showSection('install')"><i class="fas fa-cog"></i> Como Instalar</a>
-    <a href="javascript:void(0)" onclick="showSection(&apos;faqs&apos;)"><i class="fas fa-question-circle"></i> FAQs</a>
-    <a href="javascript:void(0)" onclick="showSection(&apos;changelog&apos;)"><i class="fas fa-history"></i> Changelog</a>
-    <div style="margin-top: auto; padding: 15px; font-size: 14px; opacity: 0.7;">Desenvolvido por Intocado</div>
-</nav>
-
-<main class="content">
-    <section id="home" class="active">
-<h1>Bem-vindo ao Gartic Mods</h1>
-<p>Sua fonte definitiva para modifica&#xe7;&#xf5;es e recursos do Gartic. Explore diferentes temas e personalize sua experi&#xea;ncia de jogo.</p>
-<p>Este Mod foi desenvolvido para ajudar os jogadores a escolherem salas com mais facilidade ou acessarem recursos que estão presentes apenas no site para PC, agora adaptados ao Aplicativo Android. É apenas uma continuação do Aplicativo Oficial do Gartic, que foi descontinuado e está prestes a completar 2 anos.</p>
-<p>Não há absolutamente nada de trapaças, hackings, macros ou qualquer tipo de funcionalidade que viole as regras do jogo dentro das salas. Nosso objetivo é apenas oferecer melhorias visuais e de usabilidade para os jogadores.</p>
-         <div class="feature-icons">
-            <div class="feature-icon">
-                <i class="fas fa-paint-brush"></i>
-                <span>+ Cores</span>
-            </div>
-            <div class="feature-icon">
-                <i class="fas fa-mobile-alt"></i>
-                <span>+ Optimizações</span>
-            </div>
-            <div class="feature-icon">
-                <i class="fas fa-download"></i>
-                <span>Download direto</span>
-            </div>
-            <div class="feature-icon">
-                <i class="fas fa-ban"></i>
-                <span>Sem Anúncios</span>
-            </div>
-            <div class="feature-icon">
-                <i class="fas fa-shield-alt"></i>
-                <span>100% Seguro</span>
-            </div>
-        </div>
-
-        <div class="discord-bot-card">
-            <h3>🤖 Bot Gartik para Discord</h3>
-            <p>Conheça nosso bot oficial do Discord! Com vários comandos úteis, incluindo a funcionalidade de baixar atualizações do mod diretamente pelo Discord. Uma forma rápida e prática de manter seu mod sempre atualizado!</p>
-            <a href="https://canary.discord.com/oauth2/authorize?client_id=1371333308771864636" class="discord-bot-btn" target="_blank">
-                <i class="fab fa-discord"></i> Adicionar ao Discord
-            </a>
-        </div>
-      
-<div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #27ae60, #219653); border-radius: 12px; text-align: center; color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-  <h3 style="margin-bottom: 10px; font-size: 1.5em;">
-    🎉 Atualização Lançada! 22/11
-  </h3>
-  <p style="margin: 10px 0 0; font-size: 1em;">
-    <strong>VERSÃO 55.0</strong> Servidor oficial voltou, é necessário que atualizem imediatamente. 
-  </p>
-</div>
-
-      <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #2980b9, #1f6faf); border-radius: 12px; text-align: center; color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-  <h3 style="margin-bottom: 10px; font-size: 1.5em;">
-    🚀 Conquista Alcançada!
-  </h3>
-  <p style="margin: 10px 0 0; font-size: 1em;">
-    Batemos <strong>10.000 downloads</strong>!  
-    Próxima atualização vem aí — das mais esperadas, se ninguém impedir. 😄
-  </p>
-</div>
-
-
-<div style="margin-top: 20px; padding: 15px; background: linear-gradient(135deg, #00c9ff, #92fe9d); border-radius: 12px; text-align: center; color: #000; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
-  <a href="#faqs" onclick="showSection('faqs')" style="color: black; text-decoration: underline; font-weight: bold;">
-    ❓ Ver Novas Perguntas Frequentes (FAQs)
-  </a>
-</div>
-
-
-
-
-
-
-<div id="downloads-wrapper" style="margin-top: 30px; padding: 20px; background: #1e1e2f; color: white; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
-  <h3 style="margin-bottom: 10px;">📦 Total de Downloads</h3>
-  <p style="font-size: 1.5em;" id="downloads-count">Carregando...</p>
-</div>
-
-
-
-
-    </section>
-
-    <section id="resources">
-        <h2>Recursos</h2>
-        <p>Descubra todos os recursos especiais dispon&#xed;veis em nossos mods.</p>
-        
-        <div style="text-align: left; padding: 20px;">
-            <h3>Principais Mudan&#xe7;as:</h3>
-            <ul style="list-style-type: disc; margin-left: 20px; margin-bottom: 30px;">
-                <li>Possibilidade de entrar em qualquer sala oficial: Escolha qualquer sala para jogar, tamb&#xe9;m &#xe9; poss&#xed;vel entrar via link. Desbloqueado.</li>
-                            <li>Funciona o envio de fotos para administração aptovar.</li>
-                <li>Novas cores para desenhar: Adicionados 20 novas cores. Sugest&#xf5;es? Me mande um oi no Discord: User: Intocado.</li>
-            <li>Contador de mensagem do chat e o chat: Contador ajustado para 50+ e mensagens somem após 70 mensagens no chat.</li>
-            <li>Input do teclado sempre habilitado: Agora é possível digitar nos intervalos e após acertar o desenho.</li>
-            <li>Vitórias visíveis: Agora é possível ver as vitórias de alguém em cada sala (com ícone de troféu riscado para 0 vitórias).</li>
-            <li>Segundo plano volta a funcionar: Funcionando novamente o segundo plano, exibido na barra de notificações.</li>
-            <li>Próximos a desenhar visíveis: deu para colocar apenas na barra do tempo do desenho.</li>
-            <li>Nomes dos jogadores em cada sala: na tela de confirmação.</li>
-            <li>Tela de vez e Tela de vencedor centralizados.</li>
-            <li>Buscar jogadores específicos na tela inicial.</li>
-            <li>Status de vagas para salas criadas visível na tela de confirmação.</li>
-            <li>Ícone de acerto para o próprio jogador adicionado.</li>
-        </ul>
-
-        <h3>E Mais Algumas Coisas:</h3>
-        <ul style="list-style-type: disc; margin-left: 20px;">
-            <li>Diminuído os avatares e o balão de conversa do chat.</li>
-            <li>Diminuídos alguns delays, como tempo de resposta no envio e de lista de salas.</li>
-            <li>Removidos anúncios.</li>
-            <li>Fonte padrão é Google Sans em Bold.</li>
-            <li>Botão de link de sala no botão (i) nas salas.</li>
-            <li>Ignorar alguém por comando também ignora nas respostas.</li>
-            <li>Removidos bloatwares do próprio jogo, como botões de redes sociais do Gartic.</li>
-            <li>Mais opções em salas criadas (sem spoilers).</li>
-            <li>"Saiu do jogo" trocado para "Saiu da sala".</li>
-            <li>Integração com o Site Gartic em Opções esperando 5s, é possível ver rank de cada tema.</li>
-            <li>Mostra dificuldade no aviso de confirmação Fácil, Médio e Difícil.</li>
-            <li>Mostra criador da sala no aviso de confirmação (clicável para abrir perfil).</li>
-            <li>Removido Integração com Facebook (botão de logar com facebook).</li>
-            <li>Criar conta ficou mais prático (com campo de confirmar senha e envio de foto).</li>
-            <li>Criar sala com todas as informações de uma vez.</li>
-            <li>Visível alguns emojis na bio (suporte a emojis Unicode 16.0).</li>
-            <li>Ao falar "Gartic" no chat aparece o ícone do Gartic, igual no PC.</li>
-            <li>Copia mensagens do chat e bio do perfil pressionando para selecionar.</li>
-            <li>Sons de entrada e saída dos jogadores na lista.</li>
-            <li>Tela de ranking puxando até 1100 jogadores.</li>
-            <li>Ignorar/Liberar diretamente pelo perfil do jogador na sala (em BETA).</li>
-            <li>Aceleração de hardware ativado para melhor desempenho.</li>
-            <li>Tratamento especial para nicks longos (mais de 16 caracteres).</li>
-        </ul>
-        <h3>
-            <a href="#changelog" onclick="showSection('changelog')" style="color: #1c7071; text-decoration: underline;">
-                📌 Veja mais recursos 
-            </a>
-        </h3>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
     </div>
-</section>
-
-    <section id="screenshots">
-        <h1>Screenshots</h1>
-        <p>Confira abaixo os screenshots de todos os nossos mods dispon&#xed;veis.</p>
-        
-        <div class="download-section">
-        <div class="screenshots" id="blue-screenshots">
-                <h2>Mod Classic Original</h2>
-                <div class="screenshot-container" id="blue-full">
-                    <img src="https://i.postimg.cc/BQCy92PQ/Screenshot-20250701-214651-Gartic-Classic.jpg" alt="original 1" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/FFV409wj/Screenshot-20251110-074430-Gartic-Classic.jpg" alt="original 2" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/bwCBd8R7/Screenshot-20250701-214658-Gartic-Classic.jpg" alt="original 3" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/mrP6HqXt/Screenshot-20250701-214703-Gartic-Classic.jpg" alt="original 4" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/9MT8x9j2/Screenshot-20250701-214711-Gartic-Classic.jpg" alt="original 5" onclick="showPopup(this.src)">
-                </div>
-            </div>
-        
-            <div class="screenshots" id="blue-screenshots">
-                <h2>Mod Azul Original</h2>
-                <div class="screenshot-container" id="blue-full">
-                    <img src="https://i.postimg.cc/63szGQ4m/Screenshot-20250701-214823-Gartic-Original.jpg" alt="original 1" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/PfQj1t0D/Screenshot-20251110-074409-Gartic-Original.jpg" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/5yb3nk35/Screenshot-20250701-214828-Gartic-Original.jpg" alt="original 3" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/8c4b3BK2/Screenshot-20250701-214833-Gartic-Original.jpg" alt="original 4" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/sf4KvsjT/Screenshot-20250701-214840-Gartic-Original.jpg" alt="original 5" onclick="showPopup(this.src)">
-                </div>
-            </div>
-
-            <div class="screenshots" id="purple-screenshots">
-                <h2>Mod Roxo</h2>
-                <div class="screenshot-container" id="purple-full">
-                    <img src="https://i.postimg.cc/8PVQV1yw/Screenshot-20250701-214551-Gartic-Roxo.jpg" alt="roxo 1" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/T2J6nRBN/Screenshot-20251110-074450-Gartic-Roxo.jpg" alt="roxo 2" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/XYQTF9nD/Screenshot-20250701-214602-Gartic-Roxo.jpg" alt="roxo 3" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/rps79zmy/Screenshot-20250701-214607-Gartic-Roxo.jpg" alt="roxo 4" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/yNGtpBgm/Screenshot-20250701-214615-Gartic-Roxo.jpg" alt="roxo 5" onclick="showPopup(this.src)">
-                </div>
-            </div>
-
-            <div class="screenshots" id="black-screenshots">
-                <h2>Mod Dark</h2>
-                <div class="screenshot-container" id="black-full">
-                    <img src="https://i.postimg.cc/025nSFrP/Screenshot-20250701-214846-Gartic-Dark.jpg" alt="dark 1" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/RhdxmRcx/Screenshot-20251110-074401-Gartic-Dark.jpg" alt="dark 2" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/MpvYPByL/Screenshot-20250701-214852-Gartic-Dark.jpg" alt="dark 3" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/vZktpmhZ/Screenshot-20250701-214858-Gartic-Dark.jpg" alt="dark 4" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/pdjJxtcY/Screenshot_20250701-214905_GarticDark.jpg" alt="dark 5" onclick="showPopup(this.src)">
-                </div>
-            </div>
-            
-            <div class="screenshots" id="pink-screenshots">
-                <h2>Mod Blue</h2>
-                <div class="screenshot-container" id="blue-full">
-                    <img src="https://i.postimg.cc/TPBNq9FQ/Screenshot-20250701-214726-Gartic-Blue.jpg" alt="blue 1" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/Y2zHQpT6/Screenshot-20251110-074421-Gartic-Blue.jpg" alt="blue 2" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/XJ3dbBC4/Screenshot_20250701-215103_GarticBlue.jpg" alt="blue 3" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/T1JkxXwH/Screenshot-20250701-214735-Gartic-Blue.jpg" alt="blue 4" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/gcVt83Dq/Screenshot-20250701-214742-Gartic-Blue.jpg" alt="blue 5" onclick="showPopup(this.src)">
-                </div>
-            </div>
-            
-            <div class="screenshots" id="pink-screenshots">
-                <h2>Mod Red</h2>
-                <div class="screenshot-container" id="red-full">
-                    <img src="https://i.postimg.cc/J4b8yyy9/Screenshot-20250701-214438.jpg" alt="red 1" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/qBxT2kWP/Screenshot-20251110-074508-Gartic-Red.jpg" alt="red 2" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/8z4VHqm4/Screenshot-20250701-214447.jpg" alt="red 3" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/1zz1YJWQ/Screenshot-20250701-214453.jpg" alt="red 4" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/SKtb0C5z/Screenshot-20250701-214501.jpg" alt="red 4" onclick="showPopup(this.src)">
-                </div>
-            </div>
-
-            <div class="screenshots" id="pink-screenshots">
-                <h2>Mod Rosa</h2>
-                <div class="screenshot-container" id="pink-full">
-                    <img src="https://i.postimg.cc/G28wb9wg/Screenshot-20250701-214510-Gartic-Rosa.jpg" alt="rosa 1" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/2j7DnzgP/Screenshot-20251110-074458-Gartic-Rosa.jpg" alt="rosa 2" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/zvKsRMfn/Screenshot-20250701-214519-Gartic-Rosa.jpg" alt="rosa 3" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/15cxmL2S/Screenshot-20250701-214524-Gartic-Rosa.jpg" alt="rosa 4" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/c13yjKcr/Screenshot-20250701-214531-Gartic-Rosa.jpg" alt="rosa 5" onclick="showPopup(this.src)">
-                </div>
-            </div>
-
-            <div class="screenshots" id="green-screenshots">
-                <h2>Mod Verde</h2>
-                <div class="screenshot-container" id="green-full">
-                    <img src="https://i.postimg.cc/TwWSZSgZ/Screenshot-20250701-214623-Gartic-Verde.jpg" alt="verde 1" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/jq4bysBg/Screenshot-20251110-074441-Gartic-Verde.jpg" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/XqfPvC2L/Screenshot-20250701-214628-Gartic-Verde.jpg" alt="verde 3" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/mZCJjvb9/Screenshot-20250701-214634-Gartic-Verde.jpg" alt="verde 4" onclick="showPopup(this.src)">                   
-                    <img src="https://i.postimg.cc/vHyjN0BN/Screenshot-20250701-214641-Gartic-Verde.jpg" alt="verde 5" onclick="showPopup(this.src)">
-                </div>
-            </div>
-
-            <div class="screenshots" id="cyan-screenshots">
-                <h2>Mod Abyss</h2>
-                <div class="screenshot-container" id="cyan-full">
-                    <img src="https://i.postimg.cc/65QVqZ1Q/Screenshot_20250701-214934_GarticAbyss.jpg" alt="abyss 1" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/NFDvt41w/Screenshot-20251110-074352-Gartic-Abyss.jpg" alt="abyss 2" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/vZgWLsyF/Screenshot_20250701-214940_GarticAbyss.jpg" alt="abyss 3" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/sgk5TNfB/Screenshot_20250701-214945_GarticAbyss.jpg" alt="abyss 4" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/s257q41T/Screenshot_20250701-214953_GarticAbyss.jpg" alt="abyss 5" onclick="showPopup(this.src)">
-                </div>
-            </div>
-
-            <div class="screenshots" id="brown-screenshots">
-                <h2>Mod Marrom</h2>
-                <div class="screenshot-container" id="brown-full">
-                    <img src="https://i.postimg.cc/xCSy1FWr/Screenshot_20250701-214912_GarticMarrom.jpg" alt="marrom 1" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/mg5VP5RG/Screenshot-20251110-082604-Gartic-Marrom.jpg" alt="marrom 2" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/kGJQxRJf/Screenshot_20250701-214916_GarticMarrom.jpg" alt="marrom 3" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/x86KgjqY/Screenshot_20250701-214922_GarticMarrom.jpg" alt="marrom 4" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/mZjNTjjq/Screenshot_20250701-214928_GarticMarrom.jpg" alt="marrom 5" onclick="showPopup(this.src)">
-                </div>
-            </div>
-
-            <div class="screenshots" id="true-black-screenshots">
-                <h2>Mod Preto</h2>
-                <div class="screenshot-container" id="true-black-full">
-                    <img src="https://i.postimg.cc/yxRHyxL3/Screenshot-20250701-214401-Gartic-Preto.jpg" alt="preto 1" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/pXVtZwtG/Screenshot-20251110-074518-Gartic-Preto.jpg" alt="preto 2" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/wvZzNLQd/Screenshot-20250701-214409-Gartic-Preto.jpg" alt="preto 3" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/y63sHp76/Screenshot-20250701-214416-Gartic-Preto.jpg" alt="preto 4" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/wTKHT5BX/Screenshot-20250701-214428-Gartic-Preto.jpg" alt="preto 5" onclick="showPopup(this.src)">
-                </div>
-            </div>
-
-            <div class="screenshots" id="akatsuki-screenshots">
-                <h2>Mod Naruto Akatsuki</h2>
-                <div class="screenshot-container" id="akatsuki-full">
-                    <img src="https://i.postimg.cc/rFqnJzZ6/Screenshot-20250701-214749.jpg" alt="akatsuki 1" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/3rFT2Kzm/Screenshot-20251110-074416-Gartic-Akatsuki.jpg" alt="akatsuki 2" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/P5xSg9k2/Screenshot-20250701-214756.jpg" alt="akatsuki 3" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/6Q4Y3ZqZ/Screenshot-20250701-214806.jpg" alt="akatsuki 4" onclick="showPopup(this.src)">
-                    <img src="https://i.postimg.cc/L8bx2D9R/Screenshot-20250701-214813.jpg" alt="akatsuki 5" onclick="showPopup(this.src)">
-                </div>
-            </div>
+    
+    <div class="container floating">
+        <div class="logo">
+            <i class="fas fa-rocket"></i>
         </div>
-    </section>
-
-<section id="downloads">
-  <h1>Downloads</h1>
-  <p>Baixe as &#xfa;ltimas vers&#xf5;es de nossos mods</p>
-<p style="color: #66ffcc;">
-  Agora os botões vão ficar ajustados de acordo com a quantidade de downloads.
-</p>
-  <p style="color:red;font-weight:bold;">⚠️ Atenção: Não atualize o mod enquanto estiver dentro de uma sala. Isso pode bugar o andamento do jogo por causa de novos ajustes. Além disso, não é recomendado manter uma versão anterior instalada ao mesmo tempo.</p>
-  
-  <div class="download-container">
-
-<div class="download-item">
-      <h2>Carregando mods disponíveis...</h2>
-      <div class="download-buttons">
-        <a href="javascript:void(0)" class="download-btn btn-original">
-          <span>Aguarde enquanto carregamos</span>
+        
+        <h1>Redirecionando para GTC Mod</h1>
+        
+        <p>Você está sendo redirecionado automaticamente para a versão completa do GTC Mod. Aguarde alguns segundos ou clique no botão abaixo para ir imediatamente.</p>
+        
+        <div class="countdown">
+            <span>Redirecionando em:</span>
+            <div class="countdown-number" id="countdown">5</div>
+            <span>segundos</span>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        
+        <a href="https://gtcmod.shardweb.app/" class="button">
+            <i class="fas fa-external-link-alt"></i> Ir para GTC Mod Agora
         </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="install">
-    <h1>Como Instalar</h1>
-    <p>Siga estas etapas simples para instalar os mods do Gartic no seu dispositivo Android.</p>
-    
-    <div class="install-steps">
-        <div class="step">
-            <h3>Passo 1: Baixe o Arquivo e clique e se aparecer isto abaixo</h3>
-            <div class="step-image-container">
-                <img src="https://i.postimg.cc/SKwDBndw/1.png" alt="Passo 1" onclick="showPopup(this.src)">
-            </div>
-            <p>Clique em Configurações para ir na tela de Instalar apps desconhecidos.</p>
-        </div>
         
-        <div class="step">
-            <h3>Passo 2: Permita instalações de fontes desconhecidas</h3>
-            <div class="step-image-container">
-                <img src="https://i.postimg.cc/vZ2PvqV8/2.png" alt="Passo 2" onclick="showPopup(this.src)">
-            </div>
-            <p>Ative e vai aparecer outro alerta.</p>
-        </div>
-        
-        <div class="step">
-            <h3>Passo 3: Agora pode instalar</h3>
-            <div class="step-image-container">
-                <img src="https://i.postimg.cc/7YVt5YP2/3.png" alt="Passo 3" onclick="showPopup(this.src)">
-            </div>
-            <p>Durante a instalação, pode ser que apareça um alerta do Play Protect da Play Store</p>
-        </div>
-        
-        <div class="step">
-            <h3>Passo 4: Play Protect, Como passar dele</h3>
-            <div class="step-image-container">
-                <img src="https://i.postimg.cc/VNSKZqqq/4.png" alt="Passo 4" onclick="showPopup(this.src)">
-            </div>
-            <p>Normal aparecer esse aviso, todo tipo de aplicativo baixado fora, vai aparecer o alerta. Você tem que clicar em "Mais detalhes".</p>
-        </div>
-        
-        <div class="step">
-            <h3>Passo 5: Play Protect, permitindo instalação</h3>
-            <div class="step-image-container">
-                <img src="https://i.postimg.cc/kgg1K3Dh/5.png" alt="Passo 5" onclick="showPopup(this.src)">
-            </div>
-            <p>Clica em "Instalar mesmo assim".</p>
-        </div>
-        
-        <div class="step">
-            <h3>Passo 6: Instalação concluída</h3>
-            <div class="step-image-container">
-                <img src="https://i.postimg.cc/85MtNTns/6.png" alt="Passo 6" onclick="showPopup(this.src)">
-            </div>
-            <p>Se aparecer qualquer tipo de aviso, pause temporariamente o Play Protect nas configurações do Google Play.</p>
-        </div>
-    </div>
-    
-    <div class="install-notes">
-        <h3>Observações importantes:</h3>
-        <ul>
-            <li>Não é necessário desinstalar o aplicativo original do Gartic</li>
-            <li>O mod funciona independentemente do aplicativo oficial</li>
-            <li>Atualizações são lançadas periodicamente - fique atento!</li>
-            <li>Se tiver problemas, desinstale versões anteriores antes de instalar a nova</li>
-        </ul>
-    </div>
-</section>
-
-    <section id="faqs">
-        <h2>Perguntas Frequentes</h2>
-        <p>Encontre respostas para as dúvidas mais comuns sobre nossos mods.</p>
-        
-    <div class="faq-item">
-        <h3>Como instalar os mods?</h3>
-        <p>Basta baixar o APK desejado e instalar diretamente no seu dispositivo Android. Certifique-se de permitir a instalação de fontes desconhecidas nas configurações.</p>
-    </div>
-    
-    <div class="faq-item">
-        <h3>Os mods são seguros?</h3>
-        <p>Sim, todos nossos mods são desenvolvidos com foco na segurança e testados antes do lançamento.</p>
-    </div>
-    
-    <div class="faq-item">
-        <h3>Posso usar em qualquer Android?</h3>
-        <p>Nossos mods são compatíveis com a maioria dos dispositivos Android. Apartir do Android 5 até Android 15</p>
-    </div>
-    
-        <div class="faq-item">
-        <h3>Pq o campo de digitar em respostas fica ativo quando está nos intervalos?</h3>
-        <p>É pra quando der o famoso "bug de intervalo" ter a possibilidade de digitar agora.</p>
-    </div>
-    
-        <div class="faq-item">
-        <h3>Tem roubo de dados, informações dos usuários, e bancários?</h3>
-        <p>Não, o App por si só já é limitado para funções em segundo plano, onde acontece o roubo de dados, e o Mod não solicita permissões do Dispositivo Android. Podem Conferir nas configurações do Aplicativo, onde tem as permissões.</p>
-    </div>
-    
-    <div class="faq-item">
-        <h3>Mudaram senha da minha conta / Foi Invadida...</h3>
-        <p>Provavelmente era senha fácil, sempre use senhas com símbolo pelo menos dois para ter mais segurança na conta. Use senha gerada pelo google.</p>
-    </div>
-
-<div class="faq-item">
-    <h3>Por que tem uns elementos tortos na tela, principalmente na tela da sala?</h3>
-    <p>Isso significa que você não está com a última versão do Android webview instalado, faz com que app utilize recursos e elementos antigos e desatualizados, fazendo com na leitura do jogo trave ou n se adapte adequadamente a seu celular. Portanto atualize o <a href="https://play.google.com/store/apps/details?id=com.google.android.webview" target="_blank">Android WebView</a>.</p>
-</div>
-
-       <div class="faq-item">
-        <h3>Você se encontra jogando?</h3>
-        <p>Acontece quando você utiliza Gartic Oficial e o site ao mesmo tempo logados, e acontece esse bug. Recomendo não utilizar o Oficial por enquanto, use o m.gartic.net ou GarticMod Classic.</p>
-    </div>
-      
-    <div class="faq-item">
-        <h3>Por que os anúncios foram removidos?</h3>
-        <p>Os anúncios foram removidos porque estavam em formato flutuante, atrapalhando a navegação e a jogabilidade. Fora isso, todas as demais funções seguem conforme o aplicativo oficial.</p>
-    </div>
-
-<div class="faq-item">
-    <h3>Por que não é possível salvar os desenhos?</h3>
-    <p>Não é possível salvar os desenhos porque o servidor do Gartic Mobile não envia a solicitação para o site salvar no mural do jogo.</p>
-</div>
-
-<div class="faq-item">
-    <h3>É Possível abrir o chat na tela de desenhar?</h3>
-    <p>O chat não abre nessa tela porque a interface e o layout quebram facilmente quando o teclado está aberto, comprometendo a experiência do usuário.</p>
-</div>
-
-    <div class="faq-item">
-        <h3>O app não instala ou aparece erro?</h3>
-        <p>Caso o app não instale ou apareça a mensagem "App não instalado", tente novamente. É necessário pausar o Play Protect temporariamente durante a instalação.</p>
-    </div>
-    </section>
-
-    <section id="changelog">
-        <h1>Changelog</h1>
-        <p>Acompanhe todas as atualizações e novidades dos nossos mods.</p>
-
-<div class="faq-item">
-                <h3>Versão 55.0 - RE</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>CORRIGIDO UNS BUGS: De duplicar mensagem em respostas e chat. De bugar ao aceitar a desenhar pq estava digitando no chat ou nas respostas. Caso ainda fique bugado, clique no botão de limpar o desenho nas ferramentas, que vai voltar a funcionar a desenhar.</li>
-        </ul>
-     <p style="margin-top: 10px;">
-        Encontrou outro bug? Reporte no Discord 
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord" style="width: 16px; vertical-align: middle; margin: 0 4px;">
-        meu user é intocado
-  </p>
-</div>
-
-      
-<div class="faq-item">
-                <h3>Versão 46.0 - RE</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Corrigido o bug que alguém manda código no chat, e bugava. E será ignorado completamente caso alguém mande esses específicos. (Buga todo todos mobile mod, pwa e app normal) 🙃❤️‍🩹 É Extrema importância que atualize imediatamente. 😉</li>
-                     <li>Estão com fontes semelhantes ao Mod Classic, para ter melhorias na estabilidade e renderização.</li>
-                  <li>Botão de denuncia de desenho irá bloquear após o envio. Padrão do jogo normal. Mas volta em nova rodada.</li>
-        </ul>
-</div>
-      
- <div class="faq-item">
-                <h3>Versão 45.0 - RE</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Removido barra de espessura, no lugar vai está 5 opções de espessura para você escolher, muito mais prático.</li>
-                     <li>Ao editar descrição da bio com emoji, vai mostrar os emoji direto invés em código.</li>
-        </ul>
-</div>
-      
-<div class="faq-item">
-                <h3>Versão 42.0 - Correções RE</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Corrigido avisos de TodosAcertaram duplicados.</li>
-                    <li>Corrigido avisos de Intervalos duplicados.</li>
-                  <li>Pequenas correções visuais.</li>
-        </ul>
-</div>   
-      
- <div class="faq-item">
-                <h3>Versão 41.0 - RE</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Correções de bugs em dispositivos motorola e xioami.</li>
-                     <li>Correção de bugs em alguns perfis.</li>
-                  <li>Um pouquinzin de optimização.</li>
-                  <li>Nova fonte em jog. próximos.</li>
-                  <li>Atualização via aviso inicial funciona em todos os dispositivos.</li>
-        </ul>    
-</div>
-      
-        <div class="faq-item">
-                <h3>Versão 40.0 - RE</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Após acertar a palavra, o campo de respostas voltará a ser bloqueado (acertou), até a chegada do intervalo.</li>
-                     <li>Tempo do jogo mais suave.</li>
-                  <li>Melhorias no carregamento dos perfis.</li>
-                  <li>Na tela de Ranking mostrará sua posição verdadeira.</li>
-                  <li>Melhorias na lista de jogadores.</li>
-                  <li>Pequenas Correções visuais.</li>
-        </ul>
-</div>
-
-      <div class="faq-item">
-                <h3>Versão 35.0 - Correções RE</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Corrigido notificação em segundo plano fora da sala.</li>
-                    <li>Corrigido emoji do coração aparecer em branco as vezes no chat.</li>
-                  <li>Correções para listagem das salas.</li>
-                  <li>Pequenas correções visuais nas cores.</li>
-                  <li>Suporte a símbolos e emojis tudo junto para descrição.</li>
-                  <li>Caso alguém que ganhou saiu da sala antes da tela de vencedor, o avatar será mostrado se tiver.</li>
-        </ul>
-</div>   
-      
-<div class="faq-item">
-                <h3>Versão 33.0 - Correções FINAL</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Correções de bugs em relação a última queda do Gartic ocorrido em 01/09.</li>
-                    <li>Correções de bugs a log do ban. (Tempo).</li>
-                  <li>Correção visual na cor verde.</li>
-                  <li>Correção visual na cor Preto.</li>
-        </ul>
-</div>   
-        
-      
-<div class="faq-item">
-                <h3>Versão 30.0 - FINAL</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Retirado mensagem de inicialização do criador do Mod. Movido para em opções.</li>
-                    <li>Correções visuais para celulares Motorola e Xiaomi.</li>
-                     <li>Correções ao baixar atualização para alguns celulares.</li>
-                     <li>Diminuído o tamanho do arquivo em 15%.</li>
-        </ul>
-</div> 
-      
-           <div class="faq-item">
-                <h3>Versão 28.0 - Correções</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Corrigido botão de ignorar jogador, no popup do perfil dentro da sala. Em que só ignorava as respostas, e não o chat.</li>
-                    <li>Corrigido o bug do painel de logar em Opções, no botão Site Gartic. Caso não saiba é para ver seus pontos no ranking adaptado para celulares.</li>
-        </ul>
-</div>   
-        
-           <div class="faq-item">
-                <h3>Versão 26.0 - Correções</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Ao clicar no nome do Criador na tela de confirmação, vai abrir o perfil do mesmo.</li>
-                    <li>Corrigido problema de espaço ao nome maiúsculo do vencedor e nome da vez.</li>
-                     <li>Corrigido bug de Seu perfil não encontrado ao abrir tela de Perfil.</li>
-                     <li>Aceleração de hardware ativado, para corrigir delays no andamento do desenho na tela.</li>
-                     <li>Na próxima atualização você poderá escolher qual cor do app para baixar, invés de baixar todos.</li>
-                    <li>E umas pequenas correções na bio, no status e segundo plano.</li>
-        </ul>
-</div> 
-        
-        <div class="faq-item">
-    <h3>Versão 25.0 - Correções e Novidades</h3>
-    <ul style="list-style-type: disc; margin-left: 20px;">
-        <li>Será avisado quando tiver nova atualização da versão.</li>
-        <li>Corrigido alinhamento de nome do vencedor e venceu!!! Com teclado aberto.</li>
-        <li>Corrigido nome do jogador na vez e vencedor, se tiver mais de 16 caracteres.</li>
-        <li>E umas correções visuais.</li>
-    </ul>
-</div>
-        
-   <div class="faq-item">
-                <h3>Versão 22.0 - Correções</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Correção no log do ban. Tempo de liberação tava duplicado.</li>
-                    <li>Adaptado para telas 6.4 a 6.7pol.</li>
-                     <li>Lista de jogadores corrigido e adaptado para tela do dispositivo.</li>
-                     <li>Balão de mensagens corrigidos na parte sua de envio.</li>
-                     <li>Suporte a mais símbolos unicode 16.0.</li>
-                    <li>Umas correções visuais menos importantes.</li>
-        </ul>
-</div>     
-        
-        
-<div class="faq-item">
-    <h3>Versão 21.0 - Correções</h3>
-    <ul style="list-style-type: disc; margin-left: 20px;">
-        <li>Tela de Cadastro, colocado o campo de confirmar a senha. E também enviar foto (Foto será aprovada se confirmar o cadastro primeiramente).</li>
-        <li>Melhorias na telas de salas oficiais e criadas (alinhamento).</li>
-        <li>Correções visuais para algumas cores, mais visível em AKATSUKI.</li>
-        <li>Na tela de cadastro, agora diz se o nick existe ou não durante a digitação.</li>
-    </ul>
-</div>
-        
-<div class="faq-item">
-                <h3>Versão 20.0 - Grande Atualização</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Tela de vez e Tela de vencedor centralizados (BETA).</li>
-                    <li>Adicionado lógica de erro ao buscar nick de conta que não existe.</li>
-                     <li>Suporte a emojis 16.0, emojis mais novos como ❤️‍🔥🧩🧔🏿‍♂️ vão mostrar na bio. E corrigido o erro que não retorna como "?" na bio.</li>
-                     <li>Melhorias na atualização de salas oficiais, as vezes parava de atualizar a contagem de jogadores da lista.</li>
-        </ul>
-</div>
-
-<div class="faq-item">
-    <h3>Versão 19.0 - Final</h3>
-    <ul style="list-style-type: disc; margin-left: 20px;">
-<li>Com link do site atualizado em Botão Atualize em Opções.</li>
-<li>Correções de bugs, revisão final sobre tela de vencedor e vez.</li>
-</ul>
-</div>
-
-<div class="faq-item">
-    <h3>Versão 18.0 - Final</h3>
-    <ul style="list-style-type: disc; margin-left: 20px;">
-        <li>Corrigido o bug em que não estava exibindo a tela de vencedor nas salas de vez em quando. E também no aviso em respostas.</li>
-    </ul>
-</div>
-
-
-       <div class="faq-item">
-  <h3>Versão 17.0 - Final</h3>
-  <ul style="list-style-type: disc; margin-left: 20px;">
-    <li>Corrigido o bug em que a foto do jogador da vez e do vencedor na tela de desenho não ficava centralizada caso a imagem não fosse quadrada.</li>
-    <li>Corrigido o bug em que o botão de "mais informações" aparecia no perfil dentro da sala sem necessidade.</li>
-    <li>Agora ignora completamente mais de 4 jogadores na sala. Antes, mesmo ignorando 4, ainda chegavam mensagens e o contador aumentava.</li>
-    <li>Segundo plano melhorado: agora o app não engasga, nem congela ao ser minimizado ou ao usar outro aplicativo.</li>
-    <li>Correções visuais</li>
-    <br>
-    <li><em>Na versão anterior:</em> adicionado ícone de troféu riscado para indicar 0 vitórias.</li>
-    <li><em>Na versão anterior:</em> nicks com letras maiúsculas não são mais priorizados no app.</li>
-           <br>
-</ul>
-</div>
-
-  <div class="faq-item">
-                <h3>Versão 16.0 - Importante</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Novo link do site em botão ATUALIZE em Opções.</li>
-                    <li>Adicionado liberação da conta no log do ban.</li>
-                    <li>Novos temas estrangeiros em Criar sala.</li>
-                    <li>Melhorias de Desempenho.</li>
-                </ul>
-        </div>
-        
-        <div class="faq-item">
-                <h3>Versão 15.0 - Grande atualização</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Buscar jogadores específicos na tela inicial.</li>
-                    <li>Mais informações de cadastro na tela de perfil, e no Perfil na sala.</li>
-                    <li>Status de vagas para salas criadas.</li>
-                    <li>Tela de ranking puxando até 1100 jogadores.</li>
-                    <li>Ignorar/Liberar diretamente pelo perfil do jogador na sala. (Em BETA).</li>
-                    <li>Correções visuais.</li>
-                </ul>
-            </div>
-        
-        <div class="faq-item">
-                <h3>Versão 12.0 - Grande atualização</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Visível alguns emojis na bio. Onde da pra editar descrição para adicionar emojis.</li>
-                    <li>Ao falar Gartic no chat aparece o ícone do Gartic, igual pc.</li>
-                    <li>Removido imagem de inicialização.</li>
-                    <li>Agora é possível copiar mensagens do chat e bio do perfil, pressionado pra selecionar.</li>
-                    <li>Animações e transições um pouco mais rápidos -50ms.</li>
-                    <li>&hearts ; < 3 e sz no chat, aparece o ❤️ no chat </li>
-                </ul>
-            </div>
-        
-        <div class="faq-item">
-                <h3>Versão 11.1</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Revisão de estabilidade, depois do que aconteceu nesse fim de semana.</li>
-                    <li>Umas leves correções visuais.</li>
-                </ul>
-            </div>
-        
-       <div class="faq-item">
-                <h3>Versão 11.0</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>GarticLITE foi descontinuado. Por não ter usuários e mínimo de downloads do que a versão FULL. Para não atrapalhar eu não desenvolvo isso mais.</li>
-                    <li>Removido frases alternativas nos Intervalos. Não tem ligacão com jogo. Está mantido frases padrão do jogo.</li>
-                    <li>Corrigido bug visual ao manter pressionado nos ícones de ferramentas, onde ficava com a cor azul de seleção</li>
-                    <li>Agora adicionado tratamento de lista de jogadores (Carregando jogadores..) para não ficar em uso em segundo plano e para não ter bug de abrir perfil de usuário de uma sala anterior.</li>
-                                    <li>Lançado outras cores: Abyss (Ciano escuro/Verde escuro), Akatsuki (Naruto), Marrom (Doce de leite) e Preto.</li>
-                </ul>
-            </div>
-        
-        <div class="faq-item">
-                <h3>Versão 10.1 Up2 Última atualização</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Mudei o servidor para outro (usa do pwa m.gartic.net),agora da pra enviar fotos.</li>
-                </ul>
-                </div>
-            
-        <div class="faq-item">
-                <h3>Versão 10.1 up1</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Corrigido FC em celulares motorola.</li>
-                    <li>Corrigido o sons de entrada e saída tocar dentro do jogo aleatoriamente.</li>
-                </ul>
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-bolt"></i>
+                <h3>Rápido</h3>
+                <p>Carregamento otimizado para melhor performance</p>
             </div>
             
-            <div class="faq-item">
-                <h3>Versão 10.0</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Agora tem sons de entrada e saida dos jogadores na lista, na tela de confirmação.</li>
-                    <li>Inicialização do app aumentou em 5x.</li>
-                    <li>Novo link do site, em Atualize em opções.</li>
-                    <li>Removido as conexões do facebook e de crashlytics, agora ctz q vai funcionar se tiver com net de padaria. (150kb/s).</li>
-                    <li>Melhorias na estabilidade do app.</li>
-                </ul>
+            <div class="feature">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Seguro</h3>
+                <p>Proteção e segurança garantidas</p>
             </div>
             
-            <div class="faq-item">
-                <h3>Versão 9.5</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Status de vagas corrigido.</li>
-                    <li>Corrigido bug de lista de salas não atualizar as vagas.</li>
-                    <li>Melhorias na perfomance do aplicativo.</li>
-                </ul>
-            </div>
-
-            <div class="faq-item">
-                <h3>Versão 9.4</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Versão Dark com as cores cinza escuro.</li>
-                    <li>Corrigido um bug que se abria um perfil de um jogador na tela de confirmação e dps escolher outro jogador para ver o perfil, mostrava o jogador de antes. agora tem q abrir um novo perfil a cada 2s, para limpar os dados do perfil anterior que foi aberto. e também por causa em foco de atualização dos jogadores a cada 1s.</li>
-                    <li>Melhorias na perfomance do aplicativo.</li>
-                </ul>
-            </div>
-
-            <div class="faq-item">
-                <h3>Versão 9.3</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Tela de confirmação de sala em atualização a cada 1s.</li>
-                    <li>Status de vagas.</li>
-                    <li>Melhorias nas salas na versão LITE</li>
-                </ul>
-            </div>
-
-            <div class="faq-item">
-                <h3>Versão 9.1</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>As vagas estão visiveis na tela de confirmação.</li>
-                    <li>Tela de confirmação agora em atualização a cada 1s.</li>
-                    <li>Melhorias nas salas</li>
-                </ul>
-            </div>
-
-            <div class="faq-item">
-                <h3>Versão 9.0</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Correção de bug na lista de salas</li>
-                    <li>Melhorias nas cores</li>
-                    <li>Correção de bugs menores</li>
-                </ul>
-            </div>
-
-            <div class="faq-item">
-                <h3>Versão 8.9</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Novo Link do site</li>
-                    <li>Melhorias de desempenho</li>
-                    <li>Correção de bugs menores</li>
-                </ul>
-            </div>
-
-            <div class="faq-item">
-                <h3>Versão 8.8</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Novos temas adicionados</li>
-                    <li>Melhorias de desempenho</li>
-                    <li>Correção de bugs menores</li>
-                </ul>
-            </div>
-
-            <div class="faq-item">
-                <h3>Versão 8.7</h3>
-                <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>Interface renovada</li>
-                    <li>Novo sistema de cores</li>
-                    <li>Otimização geral</li>
-                </ul>
+            <div class="feature">
+                <i class="fas fa-star"></i>
+                <h3>Premium</h3>
+                <p>Experiência completa com todos os recursos</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <div class="developer">Desenvolvido por Intocado</div>
-</main>
+    <script>
+        const targetUrl = "https://gtcmod.shardweb.app/";
+        let countdownTime = 5;
+        
+        const countdownElement = document.getElementById('countdown');
+        const progressElement = document.getElementById('progress');
+        
 
-<div id="imagePopup" class="popup" onclick="this.style.display='none'">
-    <img id="popupImage" src="" alt="">
-</div>
+        const countdownInterval = setInterval(function() {
+            countdownTime--;
+            countdownElement.textContent = countdownTime;
+            
 
-<script>
-async function getGitHubDownloads() {
-  const downloadsDiv = document.querySelector('#downloads-count');
-  if (downloadsDiv) {
-    downloadsDiv.textContent = 'Atualizando...';
-  }
+            const progressPercent = 100 - (countdownTime / 5 * 100);
+            progressElement.style.width = progressPercent + '%';
+            
 
-  try {
-    const response = await fetch('https://api.github.com/repos/archivg/tgc/releases');
-    const data = await response.json();
-    let totalDownloads = 0;
+            if (countdownTime <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = targetUrl;
+            }
+        }, 1000);
+        
 
-    data.forEach(release => {
-      if (Array.isArray(release.assets)) {
-        release.assets.forEach(asset => {
-          totalDownloads += asset.download_count || 0;
+        document.body.addEventListener('click', function(e) {
+            if (!e.target.closest('.button')) {
+                window.location.href = targetUrl;
+            }
         });
-      }
-    });
-
-    totalDownloads += 3791; // VALOR FIXO PQ O GARTIC DERRUBAVA OS SITES ANTERIORES, MAS DEU PRA SALVAR A CONTAGEM.
-
-    if (downloadsDiv) {
-      downloadsDiv.textContent = totalDownloads.toLocaleString() + ' downloads';
-    }
-  } catch (error) {
-    console.error('Erro ao buscar downloads:', error);
-    if (downloadsDiv) {
-      downloadsDiv.textContent = 'Erro ao atualizar';
-    }
-  }
-}
-
-function toggleNav() {
-  document.querySelector('.sidebar')?.classList.toggle('active');
-  document.querySelectorAll('.nav-toggle span').forEach(span => {
-    span.classList.toggle('active');
-  });
-}
-
-function showSection(sectionId) {
-  document.querySelectorAll('.content section').forEach(section => {
-    section.classList.remove('active');
-  });
-
-  document.getElementById(sectionId)?.classList.add('active');
-
-  const basePath = window.location.href.includes('uploadinto.github.io/gtreup/')
-    ? '/gtreup/#'
-    : '/#';
-
-  window.history.pushState({}, '', basePath + sectionId);
-
-  if (window.innerWidth <= 768) {
-    document.querySelector('.sidebar')?.classList.remove('active');
-  }
-}
-
-function showPopup(src) {
-  const popup = document.getElementById('imagePopup');
-  const popupImg = document.getElementById('popupImage');
-
-  if (popup && popupImg) {
-    popupImg.src = src;
-    popup.style.display = 'flex';
-  }
-}
-
-async function loadAndSortMods() {
-  try {
-    const response = await fetch('https://api.github.com/repos/archivg/tgc/releases');
-    const releases = await response.json();
-    
-    if (!releases?.length) throw new Error('Nenhuma release encontrada');
-    
-    const latestRelease = releases.find(r => !r.draft && !r.prerelease);
-    if (!latestRelease) throw new Error('Nenhuma release válida encontrada');
-    
-    const branch = latestRelease.tag_name;
-    const version = latestRelease.name.match(/(\d+\.\d+)/)?.[1] || '22.0';
-    
-    const allMods = [
-      { key: 'CLASSIC', name: 'Mod Classic Original do Gartic', class: 'btn-original' },
-      { key: 'ORIGINAL', name: 'Mod Azul Original', class: 'btn-original' },
-      { key: 'ROXO', name: 'Mod Roxo', class: 'btn-purple' },
-      { key: 'DARK', name: 'Mod Dark', class: 'btn-dark' },
-      { key: 'BLUE', name: 'Mod Blue', class: 'btn-blue' },
-      { key: 'RED', name: 'Mod Red', class: 'btn-red' },
-      { key: 'ROSA', name: 'Mod Rosa', class: 'btn-pink' },
-      { key: 'VERDE', name: 'Mod Verde', class: 'btn-green' },
-      { key: 'ABYSS', name: 'Mod Abyss', class: 'btn-cyan' },
-      { key: 'MARROM', name: 'Mod Marrom', class: 'btn-brown' },
-      { key: 'PRETO', name: 'Mod Preto', class: 'btn-true-black' },
-      { key: 'AKATSUKI', name: 'Mod Naruto Akatsuki', class: 'btn-akatsuki' }
-    ];
-    
-    const modsWithData = allMods.map(mod => {
-      const asset = latestRelease.assets.find(a => a.name.includes(mod.key) && a.name.endsWith('.apk'));
-      return {
-        ...mod,
-        downloads: asset?.download_count || 0,
-        url: asset?.browser_download_url || `https://github.com/archivg/tgc/releases/download/${branch}/${version}-Gartic${mod.key}.apk`,
-        version: version
-      };
-    });
-    
-    modsWithData.sort((a, b) => b.downloads - a.downloads);
-    
-    const container = document.querySelector('#downloads .download-container');
-    if (container) {
-      container.innerHTML = modsWithData.map(mod => `
-        <div class="download-item">
-          <h2>${mod.name}</h2>
-          <div class="download-buttons">
-            <a href="${mod.url}" class="download-btn ${mod.class}">
-              <span>Vers&#xe3;o ${mod.version}</span>
-            </a>
-          </div>
-        </div>
-      `).join('');
-    }
-    
-  } catch (error) {
-    console.error('Erro ao carregar mods:', error);
-    const container = document.querySelector('#downloads .download-container');
-    if (container) {
-      container.innerHTML = `
-        <div class="download-item">
-          <h2>Mod Classic Original do Gartic</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticCLASSIC.apk" class="download-btn btn-original">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Azul Original</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticORIGINAL.apk" class="download-btn btn-original">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Dark</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticDARK.apk" class="download-btn btn-dark">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Roxo</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticROXO.apk" class="download-btn btn-purple">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Blue</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticBLUE.apk" class="download-btn btn-blue">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Preto</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticPRETO.apk" class="download-btn btn-true-black">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Naruto Akatsuki</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticAKATSUKI.apk" class="download-btn btn-akatsuki">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Rosa</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticROSA.apk" class="download-btn btn-pink">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Red</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticRED.apk" class="download-btn btn-red">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Verde</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticVERDE.apk" class="download-btn btn-green">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Abyss</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticABYSS.apk" class="download-btn btn-cyan">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Marrom</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticMARROM.apk" class="download-btn btn-brown">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-      `;
-    }
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const rawHash = window.location.hash;
-  const hash = rawHash.replace('/gtreup/', '').slice(1) || 'home';
-  showSection(hash);
-  
-  getGitHubDownloads();
-  loadAndSortMods();
-  
-  document.querySelectorAll('.sidebar a').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const match = link.getAttribute('onclick')?.match(/showSection\('(.+)'\)/);
-      if (match && match[1]) {
-        showSection(match[1]);
-        document.querySelector('.sidebar')?.classList.remove('active');
-      }
-    });
-  });
-});
-
-window.addEventListener('popstate', () => {
-  const rawHash = window.location.hash;
-  const hash = rawHash.replace('/gtreup/', '').slice(1) || 'home';
-  showSection(hash);
-});
-
-document.addEventListener('click', e => {
-  const sidebar = document.querySelector('.sidebar');
-  const navToggle = document.querySelector('.nav-toggle');
-  if (sidebar && navToggle && !sidebar.contains(e.target) && 
-      !navToggle.contains(e.target) && sidebar.classList.contains('active')) {
-    toggleNav();
-  }
-});
-
-setInterval(getGitHubDownloads, 30000);
-setInterval(loadAndSortMods, 30 * 60 * 1000);
-</script>
+    </script>
+</body>
+</html>
