@@ -1403,7 +1403,7 @@ async function getGitHubDownloads() {
       }
     });
 
-    totalDownloads += 4291; // VALOR FIXO PQ O GARTIC DERRUBAVA OS SITES ANTERIORES, MAS DEU PRA SALVAR A CONTAGEM.
+    totalDownloads += 4291; // VALOR FIXO
 
     if (downloadsDiv) {
       downloadsDiv.textContent = totalDownloads.toLocaleString() + ' downloads';
@@ -1458,51 +1458,61 @@ async function loadAndSortMods() {
     
     if (!releases?.length) throw new Error('Nenhuma release encontrada');
     
+    // Encontrar a release mais recente não draft e não prerelease
     const latestRelease = releases.find(r => !r.draft && !r.prerelease);
     if (!latestRelease) throw new Error('Nenhuma release válida encontrada');
     
     const branch = latestRelease.tag_name;
-    const version = latestRelease.name.match(/(\d+\.\d+)/)?.[1] || '22.0';
+    const version = latestRelease.name.match(/(\d+\.\d+)/)?.[1] || '70.0';
     
-    const allMods = [
-      { key: 'CLASSIC', name: 'Mod Classic Original do Gartic', class: 'btn-original' },
-      { key: 'ORIGINAL', name: 'Mod Azul Original', class: 'btn-original' },
-      { key: 'ROXO', name: 'Mod Roxo', class: 'btn-purple' },
-      { key: 'DARK', name: 'Mod Dark', class: 'btn-dark' },
-      { key: 'BLUE', name: 'Mod Blue', class: 'btn-blue' },
-      { key: 'RED', name: 'Mod Red', class: 'btn-red' },
-      { key: 'ROSA', name: 'Mod Rosa', class: 'btn-pink' },
-      { key: 'VERDE', name: 'Mod Verde', class: 'btn-green' },
-      { key: 'ABYSS', name: 'Mod Abyss', class: 'btn-cyan' },
-      { key: 'MARROM', name: 'Mod Marrom', class: 'btn-brown' },
-      { key: 'PRETO', name: 'Mod Preto', class: 'btn-true-black' },
-      { key: 'AKATSUKI', name: 'Mod Naruto Akatsuki', class: 'btn-akatsuki' }
-    ];
+    // Mapeamento dos mods disponíveis baseado nos assets encontrados
+    const modMapping = {
+      'Garticr': { name: 'Mod Original (Garticr)', class: 'btn-original' },
+      'GarticrPRETO': { name: 'Mod Preto', class: 'btn-true-black' },
+      'GarticrROXO': { name: 'Mod Roxo', class: 'btn-purple' }
+    };
     
-    const modsWithData = allMods.map(mod => {
-      const asset = latestRelease.assets.find(a => a.name.includes(mod.key) && a.name.endsWith('.apk'));
-      return {
-        ...mod,
-        downloads: asset?.download_count || 0,
-        url: asset?.browser_download_url || `https://github.com/archivg/tgc/releases/download/${branch}/${version}-Gartic${mod.key}.apk`,
-        version: version
-      };
+    // Criar array apenas com mods encontrados nos assets
+    const availableMods = [];
+    
+    latestRelease.assets.forEach(asset => {
+      if (asset.name.endsWith('.apk')) {
+        // Extrair o nome do mod do nome do arquivo
+        const fileName = asset.name.replace(`${version}-`, '').replace('.apk', '');
+        const modInfo = modMapping[fileName];
+        
+        if (modInfo) {
+          availableMods.push({
+            key: fileName,
+            name: modInfo.name,
+            class: modInfo.class,
+            downloads: asset.download_count || 0,
+            url: asset.browser_download_url,
+            version: version
+          });
+        }
+      }
     });
     
-    modsWithData.sort((a, b) => b.downloads - a.downloads);
+    // Ordenar por downloads
+    availableMods.sort((a, b) => b.downloads - a.downloads);
     
     const container = document.querySelector('#downloads .download-container');
     if (container) {
-      container.innerHTML = modsWithData.map(mod => `
-        <div class="download-item">
-          <h2>${mod.name}</h2>
-          <div class="download-buttons">
-            <a href="${mod.url}" class="download-btn ${mod.class}">
-              <span>Vers&#xe3;o ${mod.version}</span>
-            </a>
+      if (availableMods.length === 0) {
+        container.innerHTML = '<p class="no-mods">Nenhum mod disponível no momento.</p>';
+      } else {
+        container.innerHTML = availableMods.map(mod => `
+          <div class="download-item">
+            <h2>${mod.name}</h2>
+            <div class="download-buttons">
+              <a href="${mod.url}" class="download-btn ${mod.class}">
+                <span>Versão ${mod.version}</span>
+              </a>
+            </div>
           </div>
-        </div>
-      `).join('');
+        `).join('');
+      }
     }
     
   } catch (error) {
@@ -1511,98 +1521,26 @@ async function loadAndSortMods() {
     if (container) {
       container.innerHTML = `
         <div class="download-item">
-          <h2>Mod Classic Original do Gartic</h2>
+          <h2>Mod Original (Garticr)</h2>
           <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticCLASSIC.apk" class="download-btn btn-original">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Azul Original</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticORIGINAL.apk" class="download-btn btn-original">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Dark</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticDARK.apk" class="download-btn btn-dark">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Roxo</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticROXO.apk" class="download-btn btn-purple">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Blue</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticBLUE.apk" class="download-btn btn-blue">
-              <span>Vers&#xe3;o 33.0</span>
+            <a href="https://github.com/archivg/tgc/releases/download/v/70.0-Garticr.apk" class="download-btn btn-original">
+              <span>Versão 70.0</span>
             </a>
           </div>
         </div>
         <div class="download-item">
           <h2>Mod Preto</h2>
           <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticPRETO.apk" class="download-btn btn-true-black">
-              <span>Vers&#xe3;o 33.0</span>
+            <a href="https://github.com/archivg/tgc/releases/download/v/70.0-GarticrPRETO.apk" class="download-btn btn-true-black">
+              <span>Versão 70.0</span>
             </a>
           </div>
         </div>
         <div class="download-item">
-          <h2>Mod Naruto Akatsuki</h2>
+          <h2>Mod Roxo</h2>
           <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticAKATSUKI.apk" class="download-btn btn-akatsuki">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Rosa</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticROSA.apk" class="download-btn btn-pink">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Red</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticRED.apk" class="download-btn btn-red">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Verde</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticVERDE.apk" class="download-btn btn-green">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Abyss</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticABYSS.apk" class="download-btn btn-cyan">
-              <span>Vers&#xe3;o 33.0</span>
-            </a>
-          </div>
-        </div>
-        <div class="download-item">
-          <h2>Mod Marrom</h2>
-          <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/k/33.0-GarticMARROM.apk" class="download-btn btn-brown">
-              <span>Vers&#xe3;o 33.0</span>
+            <a href="https://github.com/archivg/tgc/releases/download/v/70.0-GarticrROXO.apk" class="download-btn btn-purple">
+              <span>Versão 70.0</span>
             </a>
           </div>
         </div>
