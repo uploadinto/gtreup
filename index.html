@@ -1384,6 +1384,24 @@ body {
 </div>
 
 <script>
+// URLs codificadas em Base64
+const encodedUrls = {
+  releases: 'aHR0cHM6Ly9hcGkuZ2l0aHViLmNvbS9yZXBvcy9hcmNoaXZnL3RnYy9yZWxlYXNlcw==',
+  fallbackOriginal: 'aHR0cHM6Ly9naXRodWIuY29tL2FyY2hpdmcvdGdjL3JlbGVhc2VzL2Rvd25sb2FkL3YvNzAuMC1HYXJ0aWNyLmFwaw==',
+  fallbackPreto: 'aHR0cHM6Ly9naXRodWIuY29tL2FyY2hpdmcvdGdjL3JlbGVhc2VzL2Rvd25sb2FkL3YvNzAuMC1HYXJ0aWNyUFJFVEEuYXBr',
+  fallbackRoxo: 'aHR0cHM6Ly9naXRodWIuY29tL2FyY2hpdmcvdGdjL3JlbGVhc2VzL2Rvd25sb2FkL3YvNzAuMC1HYXJ0aWNyUk9YTy5hcGs='
+};
+
+// Função para decodificar Base64
+function decodeBase64(str) {
+  try {
+    return decodeURIComponent(escape(atob(str)));
+  } catch (e) {
+    console.error('Erro ao decodificar Base64:', e);
+    return '';
+  }
+}
+
 async function getGitHubDownloads() {
   const downloadsDiv = document.querySelector('#downloads-count');
   if (downloadsDiv) {
@@ -1391,7 +1409,8 @@ async function getGitHubDownloads() {
   }
 
   try {
-    const response = await fetch('https://api.github.com/repos/archivg/tgc/releases');
+    const apiUrl = decodeBase64(encodedUrls.releases);
+    const response = await fetch(apiUrl);
     const data = await response.json();
     let totalDownloads = 0;
 
@@ -1453,31 +1472,28 @@ function showPopup(src) {
 
 async function loadAndSortMods() {
   try {
-    const response = await fetch('https://api.github.com/repos/archivg/tgc/releases');
+    const apiUrl = decodeBase64(encodedUrls.releases);
+    const response = await fetch(apiUrl);
     const releases = await response.json();
     
     if (!releases?.length) throw new Error('Nenhuma release encontrada');
     
-    // Encontrar a release mais recente não draft e não prerelease
     const latestRelease = releases.find(r => !r.draft && !r.prerelease);
     if (!latestRelease) throw new Error('Nenhuma release válida encontrada');
     
     const branch = latestRelease.tag_name;
     const version = latestRelease.name.match(/(\d+\.\d+)/)?.[1] || '70.0';
     
-    // Mapeamento dos mods disponíveis baseado nos assets encontrados
     const modMapping = {
-      'Garticr': { name: 'Mod Original (Garticr)', class: 'btn-original' },
+      'Garticr': { name: 'Mod Original', class: 'btn-original' },
       'GarticrPRETO': { name: 'Mod Preto', class: 'btn-true-black' },
       'GarticrROXO': { name: 'Mod Roxo', class: 'btn-purple' }
     };
     
-    // Criar array apenas com mods encontrados nos assets
     const availableMods = [];
     
     latestRelease.assets.forEach(asset => {
       if (asset.name.endsWith('.apk')) {
-        // Extrair o nome do mod do nome do arquivo
         const fileName = asset.name.replace(`${version}-`, '').replace('.apk', '');
         const modInfo = modMapping[fileName];
         
@@ -1494,7 +1510,6 @@ async function loadAndSortMods() {
       }
     });
     
-    // Ordenar por downloads
     availableMods.sort((a, b) => b.downloads - a.downloads);
     
     const container = document.querySelector('#downloads .download-container');
@@ -1519,11 +1534,15 @@ async function loadAndSortMods() {
     console.error('Erro ao carregar mods:', error);
     const container = document.querySelector('#downloads .download-container');
     if (container) {
+      const originalUrl = decodeBase64(encodedUrls.fallbackOriginal);
+      const pretoUrl = decodeBase64(encodedUrls.fallbackPreto);
+      const roxoUrl = decodeBase64(encodedUrls.fallbackRoxo);
+      
       container.innerHTML = `
         <div class="download-item">
           <h2>Mod Original (Garticr)</h2>
           <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/v/70.0-Garticr.apk" class="download-btn btn-original">
+            <a href="${originalUrl}" class="download-btn btn-original">
               <span>Versão 70.0</span>
             </a>
           </div>
@@ -1531,7 +1550,7 @@ async function loadAndSortMods() {
         <div class="download-item">
           <h2>Mod Preto</h2>
           <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/v/70.0-GarticrPRETO.apk" class="download-btn btn-true-black">
+            <a href="${pretoUrl}" class="download-btn btn-true-black">
               <span>Versão 70.0</span>
             </a>
           </div>
@@ -1539,7 +1558,7 @@ async function loadAndSortMods() {
         <div class="download-item">
           <h2>Mod Roxo</h2>
           <div class="download-buttons">
-            <a href="https://github.com/archivg/tgc/releases/download/v/70.0-GarticrROXO.apk" class="download-btn btn-purple">
+            <a href="${roxoUrl}" class="download-btn btn-purple">
               <span>Versão 70.0</span>
             </a>
           </div>
