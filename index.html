@@ -637,14 +637,6 @@ body {
                 <span>100% Seguro</span>
             </div>
         </div>
-
-        <div class="discord-bot-card">
-            <h3>🤖 Bot Gartik para Discord</h3>
-            <p>Conheça nosso bot oficial do Discord! Com vários comandos úteis, incluindo a funcionalidade de baixar atualizações do mod diretamente pelo Discord. Uma forma rápida e prática de manter seu mod sempre atualizado!</p>
-            <a href="https://canary.discord.com/oauth2/authorize?client_id=1371333308771864636" class="discord-bot-btn" target="_blank">
-                <i class="fab fa-discord"></i> Adicionar ao Discord
-            </a>
-        </div>
       
 <div style="margin-top: 20px; padding: 15px; background: linear-gradient(135deg, #e74c3c, #c0392b); border-radius: 10px; text-align: center; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-size: 0.9em;">
   <p style="margin: 0; line-height: 1.4;">
@@ -1045,15 +1037,25 @@ body {
         <p>Acompanhe todas as atualizações e novidades dos nossos mods.</p>
 
 <div class="faq-item">
-                <h3>Versão 55.0 - RE</h3>
+                <h3>Versão 60.0-61.0 - RE</h3>
                 <ul style="list-style-type: disc; margin-left: 20px;">
-                    <li>CORRIGIDO UNS BUGS: De duplicar mensagem em respostas e chat. De bugar ao aceitar a desenhar pq estava digitando no chat ou nas respostas. Caso ainda fique bugado, clique no botão de limpar o desenho nas ferramentas, que vai voltar a funcionar a desenhar.</li>
-        </ul>
-     <p style="margin-top: 10px;">
+                    <li>Pontos de acertos flutuantes em cada usuário que acertar, igual no site (+10,+9...) etc.</li>
+                     <li>Abrir perfis pelo chat clicando no avatar do próprio. 61-0: Para abrir perfis no chat, tem que pressionar no avatar. Antes se clicasse sem querer abria o perfil, e causava incômodo.</li>
+                  <li>Modo minimizar(experimental), para você ativar um botão para minimizar na tela do desenho, para ver o chat etc. Também até dá para desenhar minimizado se quiser.</li>
+        <li>Correções visuais.</li>
+                </ul>
+       <p style="margin-top: 10px;">
         Encontrou outro bug? Reporte no Discord 
         <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord" style="width: 16px; vertical-align: middle; margin: 0 4px;">
         meu user é intocado
   </p>
+</div>
+      
+<div class="faq-item">
+                <h3>Versão 55.0 - RE</h3>
+                <ul style="list-style-type: disc; margin-left: 20px;">
+                    <li>CORRIGIDO UNS BUGS: De duplicar mensagem em respostas e chat. De bugar ao aceitar a desenhar pq estava digitando no chat ou nas respostas. Caso ainda fique bugado, clique no botão de limpar o desenho nas ferramentas, que vai voltar a funcionar a desenhar.</li>
+        </ul>
 </div>
 
       
@@ -1413,7 +1415,7 @@ async function getGitHubDownloads() {
       }
     });
 
-    totalDownloads += 3791; // VALOR FIXO PQ O GARTIC DERRUBAVA OS SITES ANTERIORES, MAS DEU PRA SALVAR A CONTAGEM.
+    totalDownloads += 4291; // VALOR FIXO PQ O GARTIC DERRUBAVA OS SITES ANTERIORES, MAS DEU PRA SALVAR A CONTAGEM.
 
     if (downloadsDiv) {
       downloadsDiv.textContent = totalDownloads.toLocaleString() + ' downloads';
