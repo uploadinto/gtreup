@@ -1468,11 +1468,7 @@ async function loadAndSortMods() {
     const version = latestRelease.name.match(/(\d+\.\d+)/)?.[1] || '100.0';
     
     const modMapping = {
-     
-      'Garticr_SV-SITE': { name: 'Mod Original (Site)', class: 'btn-original' },
-      'GarticrPRETO_SV-SITE': { name: 'Mod Preto (Site)', class: 'btn-true-black' },
-      'GarticrROXO_SV-SITE': { name: 'Mod Roxo (Site)', class: 'btn-purple' },
-       'GarticABYSS': { name: 'Mod Abyss', class: 'btn-cyan' },
+      'GarticABYSS': { name: 'Mod Abyss', class: 'btn-cyan' },
       'GarticAKATSUKI': { name: 'Mod Akatsuki', class: 'btn-akatsuki' },
       'GarticBLUE': { name: 'Mod Blue', class: 'btn-blue' },
       'GarticCLASSIC': { name: 'Mod Classic', class: 'btn-original' },
@@ -1483,7 +1479,10 @@ async function loadAndSortMods() {
       'GarticRED': { name: 'Mod Red', class: 'btn-red' },
       'GarticROSA': { name: 'Mod Rosa', class: 'btn-pink' },
       'GarticROXO': { name: 'Mod Roxo', class: 'btn-purple' },
-      'GarticVERDE': { name: 'Mod Verde', class: 'btn-green' }
+      'GarticVERDE': { name: 'Mod Verde', class: 'btn-green' },
+      'Garticr_SV-SITE': { name: 'Mod Original (Site)', class: 'btn-original' },
+      'GarticrPRETO_SV-SITE': { name: 'Mod Preto (Site)', class: 'btn-true-black' },
+      'GarticrROXO_SV-SITE': { name: 'Mod Roxo (Site)', class: 'btn-purple' }
     };
     
     const availableMods = [];
@@ -1506,52 +1505,70 @@ async function loadAndSortMods() {
       }
     });
     
-    availableMods.sort((a, b) => b.downloads - a.downloads);
+
+
+availableMods.sort((a, b) => {
+   
+    const aIsSite = a.name.includes('(Site)');
+    const bIsSite = b.name.includes('(Site)');
     
-    const container = document.querySelector('#downloads .download-container');
-    if (container) {
-      if (availableMods.length === 0) {
+    if (aIsSite && !bIsSite) return -1;
+    if (!aIsSite && bIsSite) return 1;
+    
+   
+    return b.downloads - a.downloads;
+});
+
+const container = document.querySelector('#downloads .download-container');
+if (container) {
+    if (availableMods.length === 0) {
         container.innerHTML = '<p class="no-mods">Nenhum mod disponível no momento.</p>';
-      } else {
-        const siteMods = availableMods.filter(mod => mod.name.includes('(Site)'));
-        
-        const siteMods = availableMods.filter(mod => mod.name.includes('(Site)'));
-        
+    } else {
         let html = '';
         
-        normalMods.forEach(mod => {
-          html += `
-            <div class="download-item">
-              <h2>${mod.name}</h2>
-              <div class="download-buttons">
-                <a href="${mod.url}" class="download-btn ${mod.class}" download>
-                  <span>Versão ${mod.version}</span>
-                </a>
-              </div>
-            </div>
-          `;
-        });
         
+        const siteMods = availableMods.filter(mod => mod.name.includes('(Site)'));
         if (siteMods.length > 0) {
-          html += '<div style="width: 100%; text-align: center; margin: 30px 0 10px; color: var(--accent); font-weight: bold;">Versões Site (Alternativa)</div>';
-          
-          siteMods.forEach(mod => {
-            html += `
-              <div class="download-item">
-                <h2>${mod.name}</h2>
-                <div class="download-buttons">
-                  <a href="${mod.url}" class="download-btn ${mod.class}" download>
-                    <span>Versão ${mod.version}</span>
-                  </a>
-                </div>
-              </div>
-            `;
-          });
+            html += '<div style="width: 100%; text-align: center; margin: 20px 0 10px; color: var(--accent); font-weight: bold; font-size: 1.2em;">🌐 Versões Site (Servidor Gartic.com)</div>';
+            
+            siteMods.forEach(mod => {
+                html += `
+                    <div class="download-item">
+                        <h2>${mod.name.replace(' (Site)', '')}</h2>
+                        <div class="download-buttons">
+                            <a href="${mod.url}" class="download-btn ${mod.class}" download>
+                                <span>Versão ${mod.version}</span>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '<div style="margin: 30px 0; border-top: 1px solid var(--accent); opacity: 0.5;"></div>';
+        }
+        
+      
+        const normalMods = availableMods.filter(mod => !mod.name.includes('(Site)'));
+        if (normalMods.length > 0) {
+            html += '<div style="width: 100%; text-align: center; margin: 20px 0 10px; color: var(--accent); font-weight: bold; font-size: 1.2em;">📱 Versões Mobile (Servidor m.gartic.net)</div>';
+            
+            normalMods.forEach(mod => {
+                html += `
+                    <div class="download-item">
+                        <h2>${mod.name}</h2>
+                        <div class="download-buttons">
+                            <a href="${mod.url}" class="download-btn ${mod.class}" download>
+                                <span>Versão ${mod.version}</span>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
         }
         
         container.innerHTML = html;
-      }
     }
+}
     
   } catch (error) {
     console.error('Erro ao carregar mods:', error);
