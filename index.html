@@ -1442,7 +1442,7 @@ function updateDownloadsCount(releases) {
     const downloadsDiv = document.querySelector('#downloads-count');
     if (!downloadsDiv) return;
 
-    let totalDownloads = 4291;
+    let totalDownloads = 17891; // dados recuperados após o reset do repo
 
     releases.forEach(release => {
         if (!Array.isArray(release.assets)) return;
