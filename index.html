@@ -1,0 +1,1730 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <base href="/gtreup/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>G Mod</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4727/4727480.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0b0d10;
+            --primary-2: #0f1318;
+            --secondary: #151a21;
+            --surface: #171d25;
+            --accent: #6b21a8;
+            --accent-light: #a855f7;
+            --accent-2: #7c5cff;
+            --text: #eef2f5;
+            --text-dim: #9aa7b4;
+            --glass: rgba(255, 255, 255, 0.045);
+            --stroke: rgba(255, 255, 255, 0.08);
+            --stroke-strong: rgba(168, 85, 247, 0.35);
+            --shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.85);
+            --radius: 18px;
+            --sidebar-w: 268px;
+            --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        html, body {
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--primary);
+        }
+
+        body {
+            background:
+                radial-gradient(900px 520px at 12% -8%, rgba(168, 85, 247, 0.16), transparent 60%),
+                radial-gradient(760px 480px at 96% 4%, rgba(124, 92, 255, 0.14), transparent 62%),
+                linear-gradient(180deg, var(--primary) 0%, var(--primary-2) 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        body::-webkit-scrollbar { width: 10px; }
+        body::-webkit-scrollbar-track { background: var(--primary); }
+        body::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+        /* ---------- Typography ---------- */
+        h1 {
+            font-size: clamp(1.9rem, 5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 18px;
+            background: linear-gradient(100deg, #ffffff 12%, var(--accent-light) 65%, var(--accent-2) 110%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: clamp(1.35rem, 3.4vw, 2rem);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 14px;
+            color: var(--text);
+        }
+
+        h3 {
+            font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+            font-weight: 700;
+            color: var(--accent-light);
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: var(--text-dim);
+            font-size: clamp(0.94rem, 2.2vw, 1.02rem);
+            margin-bottom: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        a { color: var(--accent-light); }
+
+        /* ---------- Sidebar ---------- */
+        .sidebar {
+            position: fixed;
+            inset: 0 auto 0 0;
+            width: var(--sidebar-w);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 18px 16px 16px;
+            background: linear-gradient(180deg, rgba(21, 26, 33, 0.96), rgba(11, 13, 16, 0.96));
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-right: 1px solid var(--stroke);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform var(--transition);
+        }
+
+        .sidebar::-webkit-scrollbar { width: 6px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 8px; }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+            transition: var(--transition);
+        }
+
+        .sidebar a i {
+            width: 20px;
+            text-align: center;
+            font-size: 1rem;
+            color: var(--accent-light);
+            opacity: 0.85;
+            transition: var(--transition);
+        }
+
+        .sidebar a:hover, .sidebar a.active-link {
+            color: #fff;
+            background: linear-gradient(90deg, rgba(168, 85, 247, 0.16), rgba(168, 85, 247, 0.03));
+            border-color: var(--stroke-strong);
+            transform: translateX(3px);
+        }
+
+        .sidebar a.active-link {
+            box-shadow: inset 3px 0 0 var(--accent-light);
+        }
+
+   
+        .nav-toggle {
+            position: fixed;
+            top: 14px;
+            left: 14px;
+            width: 46px;
+            height: 46px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            border-radius: 14px;
+            background: rgba(21, 26, 33, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--stroke);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            border-radius: 2px;
+            background: var(--accent-light);
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover { border-color: var(--stroke-strong); }
+        .nav-toggle span.active:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle span.active:nth-child(2) { opacity: 0; }
+        .nav-toggle span.active:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+     
+        .content {
+            margin-left: var(--sidebar-w);
+            padding: 46px clamp(18px, 4vw, 56px) 90px;
+            min-height: 100vh;
+        }
+
+        section {
+            display: none;
+            max-width: 1120px;
+            margin: 0 auto;
+            animation: fadeUp 0.45s ease both;
+        }
+
+        section.active { display: block; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes colorShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+     
+        .feature-icons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+            margin: 34px 0;
+        }
+
+        .feature-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 22px 12px;
+            text-align: center;
+            background: var(--glass);
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .feature-icon i {
+            font-size: 1.6rem;
+            color: var(--accent-light);
+        }
+
+        .feature-icon span {
+            font-size: 0.86rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .feature-icon:hover {
+            transform: translateY(-4px);
+            border-color: var(--stroke-strong);
+            background: rgba(168, 85, 247, 0.08);
+            box-shadow: var(--shadow);
+        }
+
+    
+        .banner {
+            position: relative;
+            overflow: hidden;
+            padding: 22px;
+            margin: 18px 0;
+            border-radius: var(--radius);
+            background: var(--surface);
+            border: 1px solid var(--stroke);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .banner h3 { margin-bottom: 6px; }
+        .banner p { margin-bottom: 0; }
+        .banner:hover { transform: translateY(-3px); border-color: var(--stroke-strong); }
+
+        .banner-alert {
+            background: linear-gradient(180deg, rgba(255, 71, 87, 0.12), rgba(255, 71, 87, 0.04));
+            border-color: rgba(255, 71, 87, 0.35);
+        }
+        .banner-alert p { color: #ffd7db; }
+
+        .banner-update {
+            background: linear-gradient(120deg, rgba(168, 85, 247, 0.14), rgba(124, 92, 255, 0.1));
+            border-color: var(--stroke-strong);
+        }
+
+        .banner-faq { text-align: center; padding: 0; }
+
+        .banner-faq a {
+            display: block;
+            padding: 20px;
+            font-weight: 700;
+            color: var(--accent-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .banner-faq a:hover { background: rgba(168, 85, 247, 0.08); }
+
+        .banner-downloads { text-align: center; }
+        .banner-downloads h3 { color: var(--text); }
+
+       
+        .resource-list {
+            padding: clamp(18px, 3vw, 30px);
+            background: var(--glass);
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius);
+        }
+
+        .resource-list h3 {
+            margin: 22px 0 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--stroke);
+        }
+
+        .resource-list ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 10px;
+        }
+
+        .resource-list li {
+            position: relative;
+            padding: 12px 14px 12px 38px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid transparent;
+            color: var(--text-dim);
+            font-size: 0.92rem;
+            transition: var(--transition);
+        }
+
+        .resource-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 13px;
+            top: 12px;
+            font-size: 0.78rem;
+            color: var(--accent-light);
+        }
+
+        .resource-list li:hover {
+            color: var(--text);
+            border-color: var(--stroke-strong);
+            background: rgba(168, 85, 247, 0.07);
+            transform: translateY(-2px);
+        }
+
+    
+        .screenshot-section { margin: 34px 0; }
+
+        .screenshot-section h3 {
+            margin-bottom: 14px;
+            padding-left: 12px;
+            border-left: 3px solid var(--accent-light);
+        }
+
+        .screenshot-container {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            padding-bottom: 14px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .screenshot-container img {
+            flex: 0 0 auto;
+            width: clamp(150px, 42vw, 210px);
+            border-radius: 16px;
+            border: 1px solid var(--stroke);
+            cursor: pointer;
+            scroll-snap-align: start;
+            transition: var(--transition);
+        }
+
+        .screenshot-container img:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: var(--stroke-strong);
+            box-shadow: var(--shadow);
+        }
+
+        .screenshot-container::-webkit-scrollbar { height: 8px; }
+        .screenshot-container::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 8px; }
+        .screenshot-container::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 8px; }
+
+        /* ---------- Downloads ---------- */
+        .download-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 18px;
+            margin-top: 26px;
+        }
+
+        .download-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 26px 20px;
+            text-align: center;
+            background: var(--surface);
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .download-item h2 { font-size: 1.1rem; margin-bottom: 0; }
+
+        .download-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--stroke-strong);
+        }
+
+        .download-buttons { width: 100%; }
+
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            color: #fff;
+            text-decoration: none;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            box-shadow: 0 12px 26px -14px rgba(168, 85, 247, 0.9);
+            transition: var(--transition);
+        }
+
+        .download-btn span {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 500;
+            opacity: 0.9;
+            letter-spacing: 0;
+        }
+
+        .download-btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+
+        .btn-original { background: linear-gradient(135deg, #1668c9, #37a5f5); box-shadow: 0 12px 26px -14px rgba(55, 165, 245, 0.9); }
+        .btn-purple { background: linear-gradient(135deg, #6b31c9, #a06bff); box-shadow: 0 12px 26px -14px rgba(160, 107, 255, 0.9); }
+        .btn-true-black { background: linear-gradient(135deg, #22262c, #3d444d); box-shadow: 0 12px 26px -14px rgba(0, 0, 0, 0.9); }
+        .btn-color { background: linear-gradient(135deg, #ff4d9e, #ff6b9d, #c850c0, #ff4d9e); background-size: 300% 300%; box-shadow: 0 12px 26px -14px rgba(255, 77, 158, 0.9); animation: colorShift 4s ease infinite; }
+        .btn-akatsuki { background: linear-gradient(135deg, #8b0f1d, #e23b4a); box-shadow: 0 12px 26px -14px rgba(226, 59, 74, 0.9); }
+
+        .download-count {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .no-mods { text-align: center; width: 100%; }
+
+      
+        .install-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 26px;
+        }
+
+        .step {
+            padding: 22px;
+            background: var(--glass);
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .step h3 { text-align: center; }
+
+        .step:hover {
+            transform: translateY(-4px);
+            border-color: var(--stroke-strong);
+            box-shadow: var(--shadow);
+        }
+
+        .step-image-container { display: flex; justify-content: center; }
+
+        .step-image-container img {
+            max-width: 100%;
+            width: 230px;
+            border-radius: 14px;
+            border: 1px solid var(--stroke);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .step-image-container img:hover { transform: scale(1.03); border-color: var(--stroke-strong); }
+
+        .install-notes {
+            margin-top: 30px;
+            padding: 24px;
+            background: linear-gradient(180deg, rgba(168, 85, 247, 0.08), transparent);
+            border: 1px solid var(--stroke-strong);
+            border-radius: var(--radius);
+        }
+
+        .install-notes ul { list-style: none; margin-top: 10px; }
+
+        .install-notes li {
+            position: relative;
+            padding: 8px 0 8px 26px;
+            color: var(--text-dim);
+            font-size: 0.93rem;
+        }
+
+        .install-notes li::before {
+            content: '\f0da';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 6px;
+            color: var(--accent-light);
+        }
+
+    
+        .faq-item {
+            padding: 22px;
+            margin-bottom: 14px;
+            background: var(--surface);
+            border: 1px solid var(--stroke);
+            border-left: 3px solid var(--accent);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .faq-item h3 { margin-bottom: 6px; }
+        .faq-item p { margin-bottom: 0; }
+
+        .faq-item:hover {
+            transform: translateX(4px);
+            border-left-color: var(--accent-light);
+            box-shadow: var(--shadow);
+        }
+
+    
+        .popup {
+            display: none;
+            position: fixed;
+            inset: 0;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 2000;
+            cursor: zoom-out;
+        }
+
+        .popup img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 16px;
+            border: 1px solid var(--stroke-strong);
+            box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 1);
+            animation: popIn 0.25s ease;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.94); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .developer-watermark {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            opacity: 0.7;
+        }
+
+    
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 26px;
+        }
+
+        .contact-card {
+            padding: 26px;
+            background: var(--surface);
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--stroke-strong);
+        }
+
+        .contact-card i {
+            font-size: 2.2rem;
+            color: var(--accent-light);
+            margin-bottom: 14px;
+        }
+
+        .contact-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .contact-card p {
+            font-size: 0.92rem;
+            margin-bottom: 18px;
+        }
+
+        .discord-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: rgba(168, 85, 247, 0.12);
+            border: 1px solid var(--stroke-strong);
+            border-radius: 12px;
+            font-weight: 700;
+            color: var(--accent-light);
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            border-radius: 12px;
+            border: 1px solid var(--stroke-strong);
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+            box-shadow: 0 10px 24px -10px rgba(168, 85, 247, 0.5);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 14px 24px;
+            background: var(--surface);
+            border: 1px solid var(--stroke-strong);
+            border-radius: 14px;
+            color: var(--text);
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transition: all 0.35s ease;
+            z-index: 3000;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            border: 1px solid var(--stroke-strong);
+            background: var(--surface);
+            color: var(--accent-light);
+            font-size: 1.1rem;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            z-index: 900;
+            box-shadow: var(--shadow);
+        }
+
+        .scroll-top.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px);
+            background: rgba(168, 85, 247, 0.12);
+        }
+
+    
+        @media (max-width: 900px) {
+            .sidebar {
+                width: min(80vw, 300px);
+                transform: translateX(-105%);
+                box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+            }
+
+            .sidebar.active { transform: translateX(0); }
+
+            .nav-toggle { display: flex; }
+
+            .content {
+                margin-left: 0;
+                padding: 78px 16px 70px;
+            }
+
+            .resource-list ul { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .banner, .step, .faq-item, .download-item { padding: 18px 16px; }
+            .feature-icons { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav-toggle" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+</div>
+
+<nav class="sidebar">
+    <div style="font-size: 24px; font-weight: 800; color: var(--accent-light); margin-bottom: 30px; text-align: center; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px;">Gartic Mods</div>
+    <a href="javascript:void(0)" onclick="showSection('home')"><i class="fas fa-home"></i> Página Inicial</a>
+    <a href="javascript:void(0)" onclick="showSection('resources')"><i class="fas fa-cube"></i> Recursos</a>
+    <a href="javascript:void(0)" onclick="showSection('screenshots')"><i class="fas fa-images"></i> Screenshots</a>
+    <a href="javascript:void(0)" onclick="showSection('downloads')"><i class="fas fa-download"></i> Downloads</a>
+    <a href="javascript:void(0)" onclick="showSection('install')"><i class="fas fa-cog"></i> Como Instalar</a>
+    <a href="javascript:void(0)" onclick="showSection('faqs')"><i class="fas fa-question-circle"></i> FAQs</a>
+    <a href="javascript:void(0)" onclick="showSection('changelog')"><i class="fas fa-history"></i> Changelog</a>
+    <a href="javascript:void(0)" onclick="showSection('contact')"><i class="fas fa-comment-dots"></i> Contato</a>
+    <div style="margin-top: auto; padding: 15px; font-size: 12px; color: var(--text-dim); text-align: center;">By Inpune © 2026</div>
+</nav>
+
+<main class="content">
+    <section id="home" class="active">
+        <h1 style="text-align: center;">Bem-vindo ao Gartic Mods</h1>
+        <p style="text-align: center;">Sua fonte definitiva para modificações e recursos do Gartic. Explore diferentes temas e personalize sua experiência de jogo.</p>
+        <p style="text-align: center;">Este Mod foi desenvolvido para ajudar os jogadores a escolherem salas com mais facilidade ou acessarem recursos que estão presentes apenas no site para PC, agora adaptados ao Aplicativo Android. É apenas uma continuação do Aplicativo Oficial do Gartic, que foi descontinuado e está prestes a completar 2 anos.</p>
+        <p style="text-align: center;">Não há absolutamente nada de trapaças, hackings, macros ou qualquer tipo de funcionalidade que viole as regras do jogo dentro das salas. Nosso objetivo é apenas oferecer melhorias visuais e de usabilidade para os jogadores.</p>
+        
+        <div class="feature-icons">
+            <div class="feature-icon"><i class="fas fa-paint-brush"></i><span>+ Cores</span></div>
+            <div class="feature-icon"><i class="fas fa-mobile-alt"></i><span>+ Optimizações</span></div>
+            <div class="feature-icon"><i class="fas fa-download"></i><span>Download Direto</span></div>
+            <div class="feature-icon"><i class="fas fa-ban"></i><span>Sem Anúncios</span></div>
+            <div class="feature-icon"><i class="fas fa-shield-alt"></i><span>100% Seguro</span></div>
+        </div>
+
+        <div class="banner banner-alert">
+            <p><strong>⚠️ ALERTA:</strong> Roubo de contas via scripts detectado! <strong>Evite senhas fáceis</strong>, use senhas fortes (com símbolos e números) e <strong>troque-a agora</strong> se for fraca. O GarticMod <strong>não se responsabiliza</strong> por contas invadidas.</p>
+        </div>
+
+        <div class="banner banner-update">
+            <h3 id="update-title">🎉 Atualização Lançada!</h3>
+            <p id="update-desc">Buscando versão mais recente...</p>
+        </div>
+
+        <div class="banner banner-faq">
+            <a href="javascript:void(0)" onclick="showSection('faqs')">❓ Ver Novas Perguntas Frequentes (FAQs)</a>
+        </div>
+
+        <div class="banner banner-downloads">
+            <h3>📦 Total de Downloads</h3>
+            <p style="font-size: 1.8em; font-weight: 800; color: var(--accent-light);" id="downloads-count">Carregando...</p>
+        </div>
+    </section>
+
+    <section id="resources">
+        <h1 style="text-align: center;">Recursos Disponíveis</h1>
+        <p style="text-align: center;">Descubra todos os recursos especiais disponíveis em nossos mods para melhorar sua jogabilidade.</p>
+        
+        <div class="resource-list">
+            <h3>Principais Mudanças:</h3>
+            <ul>
+                <li>Possibilidade de entrar em qualquer sala oficial: Escolha qualquer sala para jogar, também é possível entrar via link. Desbloqueado.</li>
+                <li>Funciona o envio de fotos para administração aptovar.</li>
+                <li>Novas cores para desenhar: Adicionados 20 novas cores. Sugestões? Me mande um oi no Discord: User: Inpune.</li>
+                <li>Contador de mensagem do chat e o chat: Contador ajustado para 50+ e mensagens somem após 70 mensagens no chat.</li>
+                <li>Input do teclado sempre habilitado: Agora é possível digitar nos intervalos e após acertar o desenho.</li>
+                <li>Vitórias visíveis: Agora é possível ver as vitórias de alguém em cada sala (com ícone de troféu riscado para 0 vitórias).</li>
+                <li>Segundo plano volta a funcionar: Funcionando novamente o segundo plano, exibido na barra de notificações.</li>
+                <li>Próximos a desenhar visíveis: deu para colocar apenas na barra do tempo do desenho.</li>
+                <li>Nomes dos jogadores em cada sala: na tela de confirmação.</li>
+                <li>Tela de vez e Tela de vencedor centralizados.</li>
+                <li>Buscar jogadores específicos na tela inicial.</li>
+                <li>Status de vagas para salas criadas visível na tela de confirmação.</li>
+                <li>Ícone de acerto para o próprio jogador adicionado.</li>
+            </ul>
+
+            <h3>E Mais Algumas Coisas:</h3>
+            <ul>
+                <li>Diminuído os avatares e o balão de conversa do chat.</li>
+                <li>Diminuídos alguns delays, como tempo de resposta no envio e de lista de salas.</li>
+                <li>Removidos anúncios.</li>
+                <li>Fonte padrão é Google Sans em Bold.</li>
+                <li>Botão de link de sala no botão (i) nas salas.</li>
+                <li>Ignorar alguém por comando também ignora nas respostas.</li>
+                <li>Removidos bloatwares do próprio jogo, como botões de redes sociais do Gartic.</li>
+                <li>Mais opções em salas criadas (sem spoilers).</li>
+                <li>"Saiu do jogo" trocado para "Saiu da sala".</li>
+                <li>Integração com o Site Gartic em Opções esperando 5s, é possível ver rank de cada tema.</li>
+                <li>Mostra dificuldade no aviso de confirmação Fácil, Médio e Difícil.</li>
+                <li>Mostra criador da sala no aviso de confirmação (clicável para abrir perfil).</li>
+                <li>Removido Integração com Facebook (botão de logar com facebook).</li>
+                <li>Criar conta ficou mais prático (com campo de confirmar senha e envio de foto).</li>
+                <li>Criar sala com todas as informações de uma vez.</li>
+                <li>Visível alguns emojis na bio (suporte a emojis Unicode 16.0).</li>
+                <li>Ao falar "Gartic" no chat aparece o ícone do Gartic, igual no PC.</li>
+                <li>Copia mensagens do chat e bio do perfil pressionando para selecionar.</li>
+                <li>Sons de entrada e saída dos jogadores na lista.</li>
+                <li>Tela de ranking puxando até 1100 jogadores.</li>
+                <li>Ignorar/Liberar diretamente pelo perfil do jogador na sala.</li>
+                <li>Aceleração de hardware ativado para melhor desempenho.</li>
+                <li>Tratamento especial para nicks longos (mais de 16 caracteres).</li>
+            </ul>
+            <h3 style="margin-top: 30px;">
+                <a href="javascript:void(0)" onclick="showSection('changelog')" style="color: var(--accent-light); text-decoration: none; display: inline-block; padding: 10px 20px; background: rgba(168, 85, 247, 0.1); border-radius: 10px; transition: 0.3s;">
+                    📌 Veja mais atualizações no Changelog
+                </a>
+            </h3>
+        </div>
+    </section>
+
+    <section id="screenshots">
+        <h1 style="text-align: center;">Screenshots Oficiais</h1>
+        <p style="text-align: center;">Confira abaixo as prévias de todos os nossos temas disponíveis no aplicativo.</p>
+        
+        <div class="screenshot-section">
+            <h3>Mod Azul Original</h3>
+            <div class="screenshot-container">
+                <img src="https://i.postimg.cc/63szGQ4m/Screenshot-20250701-214823-Gartic-Original.jpg" onclick="showPopup(this.src)" alt="Mod Original">
+                <img src="https://i.postimg.cc/43BfhfSd/Screenshot_20260317_133847_Garticr.jpg" onclick="showPopup(this.src)" alt="Mod Original">
+                <img src="https://i.postimg.cc/5yb3nk35/Screenshot-20250701-214828-Gartic-Original.jpg" onclick="showPopup(this.src)" alt="Mod Original">
+                <img src="https://i.postimg.cc/8c4b3BK2/Screenshot-20250701-214833-Gartic-Original.jpg" onclick="showPopup(this.src)" alt="Mod Original">
+                <img src="https://i.postimg.cc/sf4KvsjT/Screenshot-20250701-214840-Gartic-Original.jpg" onclick="showPopup(this.src)" alt="Mod Original">
+            </div>
+        </div>
+
+        <div class="screenshot-section">
+            <h3>Mod Roxo</h3>
+            <div class="screenshot-container">
+                <img src="https://i.postimg.cc/8PVQV1yw/Screenshot-20250701-214551-Gartic-Roxo.jpg" onclick="showPopup(this.src)" alt="Mod Roxo">
+                <img src="https://i.postimg.cc/VNDfbfVN/Screenshot_20260317_133856_Garticr_Roxo.jpg" onclick="showPopup(this.src)" alt="Mod Roxo">
+                <img src="https://i.postimg.cc/XYQTF9nD/Screenshot-20250701-214602-Gartic-Roxo.jpg" onclick="showPopup(this.src)" alt="Mod Roxo">
+                <img src="https://i.postimg.cc/rps79zmy/Screenshot-20250701-214607-Gartic-Roxo.jpg" onclick="showPopup(this.src)" alt="Mod Roxo">
+                <img src="https://i.postimg.cc/yNGtpBgm/Screenshot-20250701-214615-Gartic-Roxo.jpg" onclick="showPopup(this.src)" alt="Mod Roxo">
+            </div>
+        </div>
+         
+        <div class="screenshot-section">
+            <h3>Mod Preto</h3>
+            <div class="screenshot-container">
+                <img src="https://i.postimg.cc/yxRHyxL3/Screenshot-20250701-214401-Gartic-Preto.jpg" onclick="showPopup(this.src)" alt="Mod Preto">
+                <img src="https://i.postimg.cc/0N85QMcM/Screenshot_20260317_133905_Garticr_Preto.jpg" onclick="showPopup(this.src)" alt="Mod Preto">
+                <img src="https://i.postimg.cc/wvZzNLQd/Screenshot-20250701-214409-Gartic-Preto.jpg" onclick="showPopup(this.src)" alt="Mod Preto">
+                <img src="https://i.postimg.cc/y63sHp76/Screenshot-20250701-214416-Gartic-Preto.jpg" onclick="showPopup(this.src)" alt="Mod Preto">
+                <img src="https://i.postimg.cc/wTKHT5BX/Screenshot-20250701-214428-Gartic-Preto.jpg" onclick="showPopup(this.src)" alt="Mod Preto">
+            </div>
+        </div>
+
+        <div class="screenshot-section">
+            <h3>Mod Color</h3>
+            <div class="screenshot-container">
+                <img src="https://i.postimg.cc/W42p3FXD/Screenshot_20260317_133952_Garticr_Color.jpg" onclick="showPopup(this.src)" alt="Mod Color">
+                <img src="https://i.postimg.cc/Pqtfxp2C/Screenshot_20260317_133957_Garticr_Color.jpg" onclick="showPopup(this.src)" alt="Mod Color">
+                <img src="https://i.postimg.cc/Jh17nDPC/Screenshot_20260317_134002_Garticr_Color.jpg" onclick="showPopup(this.src)" alt="Mod Color">
+                <img src="https://i.postimg.cc/KYZczkJy/Screenshot_20260317_134009_Garticr_Color.jpg" onclick="showPopup(this.src)" alt="Mod Color">
+                <img src="https://i.postimg.cc/FK9FRdD5/Screenshot_20260317_134016_Garticr_Color.jpg" onclick="showPopup(this.src)" alt="Mod Color">
+                <img src="https://i.postimg.cc/7LxP6GmD/Screenshot_20260317_134030_Garticr_Color.jpg" onclick="showPopup(this.src)" alt="Mod Color">
+            </div>
+        </div>
+    </section>
+
+    <section id="downloads">
+        <h1 style="text-align: center;">Centro de Downloads</h1>
+        <p style="text-align: center;">Baixe as últimas versões de nossos mods de forma segura.</p>
+        <p style="text-align: center; color: var(--accent-light); font-weight: 600;">Os botões são ordenados automaticamente pela quantidade de downloads.</p>
+        <p style="text-align: center; color: #ff4757; font-weight: bold; background: rgba(255, 71, 87, 0.1); padding: 15px; border-radius: 10px; border: 1px solid rgba(255, 71, 87, 0.3); margin: 20px 0;">⚠️ Atenção: Não atualize o mod enquanto estiver dentro de uma sala. Isso pode bugar o andamento do jogo por causa de novos ajustes. Além disso, não é recomendado manter uma versão anterior instalada ao mesmo tempo.</p>
+        
+        <div id="downloads-container" class="download-container">
+            <div class="download-item">
+                <h2>Buscando servidores...</h2>
+                <div class="download-buttons">
+                    <a href="javascript:void(0)" class="download-btn btn-original">
+                        BAIXAR<span>Aguarde um momento</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="install">
+        <h1 style="text-align: center;">Guia de Instalação</h1>
+        <p style="text-align: center;">Siga estas etapas simples para instalar os mods do Gartic no seu dispositivo Android sem erros.</p>
+        
+        <div class="install-steps">
+            <div class="step">
+                <h3>Passo 1: Permitir Configurações</h3>
+                <p style="text-align: center;">Baixe o Arquivo e clique para abrir. Se aparecer o aviso abaixo, clique em "Configurações" para ir à tela de Instalar apps desconhecidos.</p>
+                <div class="step-image-container">
+                    <img src="https://i.postimg.cc/SKwDBndw/1.png" onclick="showPopup(this.src)" alt="Passo 1">
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Passo 2: Fontes Desconhecidas</h3>
+                <p style="text-align: center;">Ative a chave de permissão para permitir instalações desta fonte. Um alerta de confirmação do Android aparecerá.</p>
+                <div class="step-image-container">
+                    <img src="https://i.postimg.cc/vZ2PvqV8/2.png" onclick="showPopup(this.src)" alt="Passo 2">
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Passo 3: Tela de Instalação</h3>
+                <p style="text-align: center;">Retorne para a tela do arquivo. Agora você poderá clicar em "Instalar".</p>
+                <div class="step-image-container">
+                    <img src="https://i.postimg.cc/7YVt5YP2/3.png" onclick="showPopup(this.src)" alt="Passo 3">
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Passo 4: Aviso do Play Protect</h3>
+                <p style="text-align: center;">É completamente normal aparecer o alerta do Play Protect para apps baixados fora da loja. Clique em "Mais detalhes".</p>
+                <div class="step-image-container">
+                    <img src="https://i.postimg.cc/VNSKZqqq/4.png" onclick="showPopup(this.src)" alt="Passo 4">
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Passo 5: Confirmar no Play Protect</h3>
+                <p style="text-align: center;">Após expandir os detalhes, clique na opção "Instalar mesmo assim".</p>
+                <div class="step-image-container">
+                    <img src="https://i.postimg.cc/kgg1K3Dh/5.png" onclick="showPopup(this.src)" alt="Passo 5">
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Passo 6: Instalação Concluída</h3>
+                <p style="text-align: center;">Pronto! O app foi instalado com sucesso. Se persistir algum erro, pause temporariamente o Play Protect nas configurações da Google Play Store.</p>
+                <div class="step-image-container">
+                    <img src="https://i.postimg.cc/85MtNTns/6.png" onclick="showPopup(this.src)" alt="Passo 6">
+                </div>
+            </div>
+        </div>
+        
+        <div class="install-notes">
+            <h3 style="color: var(--accent-light);">Observações Importantes:</h3>
+            <ul>
+                <li>Não é necessário desinstalar o aplicativo original do Gartic.</li>
+                <li>O mod funciona independentemente do aplicativo oficial da Play Store.</li>
+                <li>Atualizações são lançadas periodicamente - fique atento ao site!</li>
+                <li>Se tiver problemas de instalação (App não instalado), desinstale versões anteriores do Mod antes de tentar instalar a nova.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="faqs">
+        <h1 style="text-align: center;">Perguntas Frequentes</h1>
+        <p style="text-align: center; margin-bottom: 40px;">Encontre respostas diretas para as dúvidas mais comuns sobre nossos mods.</p>
+        
+        <div class="faq-item">
+            <h3>Como instalar os mods?</h3>
+            <p>Basta baixar o APK desejado na seção de Downloads e instalar diretamente no seu dispositivo Android. Certifique-se de permitir a instalação de fontes desconhecidas nas configurações do sistema.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Os mods são seguros?</h3>
+            <p>Sim, todos nossos mods são desenvolvidos com foco na segurança e testados antes do lançamento. É uma modificação limpa focada apenas na experiência do usuário.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Posso usar em qualquer Android?</h3>
+            <p>Nossos mods são altamente compatíveis e suportam a grande maioria dos dispositivos, funcionando a partir do Android 5 até o Android 15.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Por que o campo de digitar fica ativo durante os intervalos?</h3>
+            <p>Foi mantido ativo para quando ocorrer o famoso "bug de intervalo", permitindo que os jogadores tenham a possibilidade de continuar digitando e interagindo normalmente.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Tem roubo de dados, informações dos usuários, e bancários?</h3>
+            <p>Não, o App por si só já é limitado para funções em segundo plano, onde normalmente acontece o roubo de dados. O Mod não solicita permissões intrusivas do Dispositivo Android. Você pode conferir nas configurações de Permissões do Aplicativo em seu celular.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Mudaram a senha da minha conta / Fui invadido...</h3>
+            <p>Se isso ocorreu no Gartic Oficial, provavelmente você utilizava uma senha fácil. Sempre use senhas fortes contendo pelo menos dois símbolos, números e letras maiúsculas para ter mais segurança. Recomendamos usar senhas geradas pelo Google.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Por que tem elementos tortos ou cortados na tela da sala?</h3>
+            <p>Isso indica que você não está com a última versão do Android WebView instalada. Isso faz com que o app utilize motores de renderização desatualizados, travando ou quebrando o layout do jogo. Portanto, atualize o <a href="https://play.google.com/store/apps/details?id=com.google.android.webview" target="_blank" style="color: var(--accent-light); font-weight: 600; text-decoration: none;">Android System WebView na Play Store</a>.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Erro: "Você se encontra jogando"?</h3>
+            <p>Isso acontece quando você utiliza o Gartic Oficial e o site/mod ao mesmo tempo, gerando um conflito de sessão no servidor. Recomendamos deslogar do Oficial ou utilizar apenas as versões do Mod/Site.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Por que não é possível salvar os desenhos?</h3>
+            <p>Agora é possível! A partir da versão 70.0, você pode salvar os desenhos indo em "Opções" para ativar a funcionalidade diretamente no mural do jogo.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>É possível abrir o chat na tela de desenhar?</h3>
+            <p>Sim, com o "modo minimizar" ativado (disponível a partir da versão 50.0). O chat em tela cheia na tela de desenho não é ativado por padrão porque o teclado quebra a interface de pintura na maioria dos celulares.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>O app não instala ou aparece "App não instalado"?</h3>
+            <p>Isso costuma ocorrer por falta de armazenamento, versão conflitante já instalada ou bloqueio do Play Protect. Tente desinstalar mods antigos, liberar espaço e pausar o Play Protect temporariamente durante a instalação.</p>
+        </div>
+    </section>
+
+    <section id="changelog">
+        <h1 style="text-align: center;">Histórico de Atualizações</h1>
+        <p style="text-align: center; margin-bottom: 40px;">Acompanhe todas as atualizações, correções e novidades técnicas de nossas versões.</p>
+
+        <div id="dynamic-changelog"></div>
+
+        <div class="faq-item">
+            <h3>Versão 155.0-200.0 - R</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">Temas de cores ainda mais escuras em versão GarticrColor. Caso aconteça de entrar mais de 10 jogadores em salas padrão irá mostrar. Não irá mais se limitar a 10 jogadores na lista de usuários. Tela de Ranking melhorado e agora com categoria de Ano, e por vitórias. Atualizacão de cont. jogadores online, lista de salas e status de vagas melhorados. Fotos de perfis nos avatar, irá sempre solicitar nova imagem. Temas estrangeiros para criar sala. Correções visuais.
+Adicionado página do TrucoON para criar conta por lá, já que maioria das vezes o gartic não manda confirmação no email. Sempre ativados botões de minimizar e salvar desenho.</p>
+            <p style="margin-top: 15px; color: var(--text-dim); font-size: 0.9em; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
+                Encontrou outro bug? Reporte no Discord 
+                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord" style="width: 16px; vertical-align: middle; margin: 0 4px; filter: invert(1);">
+                meu user é <strong>inpune</strong>
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 110.0-151.0 - R</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Correções de bugs, correções visuais finais. Revisado interno para n ter bugs adiante. reconexão melhorada
+• Adicionado tela de atualização, ao clicar em atualize no botão em opções. Adicionado o mesmo ao abrir versão anterior.
+• Adicionado ícone de vez para o próprio jogador caso use modo minimizar. E correções para dispositivos de tela maiores ao utilizar esse recurso.
+• Temas de cores, em opções, + opções você pode escolher. Apenas na versão GarticrColor. Melhorias ao desenhar em minimizado, em alguns dispositivos já pode rabiscar até a borda da tela. Expulsar jogador em sala criada. (Dono). Opções no menu do perfil próprio inseridos. Status de vaga para salas mais de 10 jogadores em sala criada corrigido. Tela de Ranking corrigido. Atualização nos pontos no perfil na sala (Apenas para perfil próprio seu). Suporte a alguns emojis do teclado para o chat, visível apenas para quem usa o mod. Pequenas correções visuais.
+• Corrigido bug dos ícones da espessura e opacidade. Compatível com Android 16. Corrigido bug de FC(fechar sozinho) nos xiaomi e Motorola.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 65.0-105.0 - R</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Lançamento final com servidor do mobile m.gartic.net e do site gartic.com.br, escolha de acordo com sua necessidade e correções de bugs na versão do servidor mobile.
+• Possível salvar seus desenhos do jogo no seu perfil no muraljogo, e correções de bugs. 90.0 - Revisão final,corrigido o bug de não mostrar os acertos, denúncia e deu todas as dicas, avisos da sua vez na tela de desenhar.
+• Mod adaptado para servidor do site, teve que remover várias funções que tinha no servidor do mobile, pq não funcionam mais.
+• Tela de Ranking para ver seus pontos e vitórias em cada tema, tem q ir na tela de ranking e clicar em > e umas correções visuais. 67.0 - Feedback na correção de não carregar Ranking da semana e mês, e também de informar sobre perfis desativados ao buscar Nick na tela inicial.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 60.0-61.0 - RE</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Pontos de acertos flutuantes em cada usuário que acertar, igual no site (+10,+9...) etc.
+• Abrir perfis pelo chat clicando no avatar do próprio. 61-0: Para abrir perfis no chat, tem que pressionar no avatar. Antes se clicasse sem querer abria o perfil, e causava incômodo.
+• Modo minimizar(experimental), para você ativar um botão para minimizar na tela do desenho, para ver o chat etc. Também até dá para desenhar minimizado se quiser.
+• Correções visuais.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 55.0 - RE</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• CORRIGIDO UNS BUGS: De duplicar mensagem em respostas e chat. De bugar ao aceitar a desenhar pq estava digitando no chat ou nas respostas. Caso ainda fique bugado, clique no botão de limpar o desenho nas ferramentas, que vai voltar a funcionar a desenhar.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 46.0 - RE</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Corrigido o bug que alguém manda código no chat, e bugava. E será ignorado completamente caso alguém mande esses específicos. (Buga todo todos mobile mod, pwa e app normal) 🙃❤️‍🩹 É Extrema importância que atualize imediatamente. 😉
+• Estão com fontes semelhantes ao Mod Classic, para ter melhorias na estabilidade e renderização.
+• Botão de denuncia de desenho irá bloquear após o envio. Padrão do jogo normal. Mas volta em nova rodada.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 45.0 - RE</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Removido barra de espessura, no lugar vai está 5 opções de espessura para você escolher, muito mais prático.
+• Ao editar descrição da bio com emoji, vai mostrar os emoji direto invés em código.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 42.0 - Correções RE</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Corrigido avisos de TodosAcertaram duplicados.
+• Corrigido avisos de Intervalos duplicados.
+• Pequenas correções visuais.</p>
+        </div>   
+        
+        <div class="faq-item">
+            <h3>Versão 41.0 - RE</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Correções de bugs em dispositivos motorola e xioami.
+• Correção de bugs em alguns perfis.
+• Um pouquinzin de optimização.
+• Nova fonte em jog. próximos.
+• Atualização via aviso inicial funciona em todos os dispositivos.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 40.0 - RE</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Após acertar a palavra, o campo de respostas voltará a ser bloqueado (acertou), até a chegada do intervalo.
+• Tempo do jogo mais suave.
+• Melhorias no carregamento dos perfis.
+• Na tela de Ranking mostrará sua posição verdadeira.
+• Melhorias na lista de jogadores.
+• Pequenas Correções visuais.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 35.0 - Correções RE</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Corrigido notificação em segundo plano fora da sala.
+• Corrigido emoji do coração aparecer em branco as vezes no chat.
+• Correções para listagem das salas.
+• Pequenas correções visuais nas cores.
+• Suporte a símbolos e emojis tudo junto para descrição.
+• Caso alguém que ganhou saiu da sala antes da tela de vencedor, o avatar será mostrado se tiver.</p>
+        </div>   
+        
+        <div class="faq-item">
+            <h3>Versão 33.0 - Correções FINAL</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Correções de bugs em relação a última queda do Gartic ocorrido em 01/09.
+• Correções de bugs a log do ban. (Tempo).
+• Correção visual na cor verde.
+• Correção visual na cor Preto.</p>
+        </div>   
+        
+        <div class="faq-item">
+            <h3>Versão 30.0 - FINAL</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Retirado mensagem de inicialização do criador do Mod. Movido para em opções.
+• Correções visuais para celulares Motorola e Xiaomi.
+• Correções ao baixar atualização para alguns celulares.
+• Diminuído o tamanho do arquivo em 15%.</p>
+        </div> 
+        
+        <div class="faq-item">
+            <h3>Versão 28.0 - Correções</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Corrigido botão de ignorar jogador, no popup do perfil dentro da sala. Em que só ignorava as respostas, e não o chat.
+• Corrigido o bug do painel de logar em Opções, no botão Site Gartic. Caso não saiba é para ver seus pontos no ranking adaptado para celulares.</p>
+        </div>   
+        
+        <div class="faq-item">
+            <h3>Versão 26.0 - Correções</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Ao clicar no nome do Criador na tela de confirmação, vai abrir o perfil do mesmo.
+• Corrigido problema de espaço ao nome maiúsculo do vencedor e nome da vez.
+• Corrigido bug de Seu perfil não encontrado ao abrir tela de Perfil.
+• Aceleração de hardware ativado, para corrigir delays no andamento do desenho na tela.
+• Na próxima atualização você poderá escolher qual cor do app para baixar, invés de baixar todos.
+• E umas pequenas correções na bio, no status e segundo plano.</p>
+        </div> 
+        
+        <div class="faq-item">
+            <h3>Versão 25.0 - Correções e Novidades</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Será avisado quando tiver nova atualização da versão.
+• Corrigido alinhamento de nome do vencedor e venceu!!! Com teclado aberto.
+• Corrigido nome do jogador na vez e vencedor, se tiver mais de 16 caracteres.
+• E umas correções visuais.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 22.0 - Correções</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Correção no log do ban. Tempo de liberação tava duplicado.
+• Adaptado para telas 6.4 a 6.7pol.
+• Lista de jogadores corrigido e adaptado para tela do dispositivo.
+• Balão de mensagens corrigidos na parte sua de envio.
+• Suporte a mais símbolos unicode 16.0.
+• Umas correções visuais menos importantes.</p>
+        </div>     
+        
+        <div class="faq-item">
+            <h3>Versão 21.0 - Correções</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Tela de Cadastro, colocado o campo de confirmar a senha. E também enviar foto (Foto será aprovada se confirmar o cadastro primeiramente).
+• Melhorias na telas de salas oficiais e criadas (alinhamento).
+• Correções visuais para algumas cores, mais visível em AKATSUKI.
+• Na tela de cadastro, agora diz se o nick existe ou não durante a digitação.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 20.0 - Grande Atualização</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Tela de vez e Tela de vencedor centralizados (BETA).
+• Adicionado lógica de erro ao buscar nick de conta que não existe.
+• Suporte a emojis 16.0, emojis mais novos como ❤️‍🔥🧩🧔🏿‍♂️ vão mostrar na bio. E corrigido o erro que não retorna como "?" na bio.
+• Melhorias na atualização de salas oficiais, as vezes parava de atualizar a contagem de jogadores da lista.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 19.0 - Final</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Com link do site atualizado em Botão Atualize em Opções.
+• Correções de bugs, revisão final sobre tela de vencedor e vez.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 18.0 - Final</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Corrigido o bug em que não estava exibindo a tela de vencedor nas salas de vez em quando. E também no aviso em respostas.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 17.0 - Final</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Corrigido o bug em que a foto do jogador da vez e do vencedor na tela de desenho não ficava centralizada caso a imagem não fosse quadrada.
+• Corrigido o bug em que o botão de "mais informações" aparecia no perfil dentro da sala sem necessidade.
+• Agora ignora completamente mais de 4 jogadores na sala. Antes, mesmo ignorando 4, ainda chegavam mensagens e o contador aumentava.
+• Segundo plano melhorado: agora o app não engasga, nem congela ao ser minimizado ou ao usar outro aplicativo.
+• Correções visuais
+• Na versão anterior: adicionado ícone de troféu riscado para indicar 0 vitórias.
+• Na versão anterior: nicks com letras maiúsculas não são mais priorizados no app.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 16.0 - Importante</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Novo link do site em botão ATUALIZE em Opções.
+• Adicionado liberação da conta no log do ban.
+• Novos temas estrangeiros em Criar sala.
+• Melhorias de Desempenho.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 15.0 - Grande atualização</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Buscar jogadores específicos na tela inicial.
+• Mais informações de cadastro na tela de perfil, e no Perfil na sala.
+• Status de vagas para salas criadas.
+• Tela de ranking puxando até 1100 jogadores.
+• Ignorar/Liberar diretamente pelo perfil do jogador na sala. (Em BETA).
+• Correções visuais.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 12.0 - Grande atualização</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Visível alguns emojis na bio. Onde da pra editar descrição para adicionar emojis.
+• Ao falar Gartic no chat aparece o ícone do Gartic, igual pc.
+• Removido imagem de inicialização.
+• Agora é possível copiar mensagens do chat e bio do perfil, pressionado pra selecionar.
+• Animações e transições um pouco mais rápidos -50ms.
+• &hearts ; < 3 e sz no chat, aparece o ❤️ no chat.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 11.1</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Revisão de estabilidade, depois do que aconteceu nesse fim de semana.
+• Umas leves correções visuais.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 11.0</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• GarticLITE foi descontinuado. Por não ter usuários e mínimo de downloads do que a versão FULL. Para não atrapalhar eu não desenvolvo isso mais.
+• Removido frases alternativas nos Intervalos. Não tem ligacão com jogo. Está mantido frases padrão do jogo.
+• Corrigido bug visual ao manter pressionado nos ícones de ferramentas, onde ficava com a cor azul de seleção.
+• Agora adicionado tratamento de lista de jogadores (Carregando jogadores..) para não ficar em uso em segundo plano e para não ter bug de abrir perfil de usuário de uma sala anterior.
+• Lançado outras cores: Abyss (Ciano escuro/Verde escuro), Akatsuki (Naruto), Marrom (Doce de leite) e Preto.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h3>Versão 10.1 Up2 Última atualização</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Mudei o servidor para outro (usa do pwa m.gartic.net),agora da pra enviar fotos.</p>
+        </div>
+            
+        <div class="faq-item">
+            <h3>Versão 10.1 up1</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Corrigido FC em celulares motorola.
+• Corrigido o sons de entrada e saída tocar dentro do jogo aleatoriamente.</p>
+        </div>
+            
+        <div class="faq-item">
+            <h3>Versão 10.0</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Agora tem sons de entrada e saida dos jogadores na lista, na tela de confirmação.
+• Inicialização do app aumentou em 5x.
+• Novo link do site, em Atualize em opções.
+• Removido as conexões do facebook e de crashlytics, agora ctz q vai funcionar se tiver com net de padaria. (150kb/s).
+• Melhorias na estabilidade do app.</p>
+        </div>
+            
+        <div class="faq-item">
+            <h3>Versão 9.5</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Status de vagas corrigido.
+• Corrigido bug de lista de salas não atualizar as vagas.
+• Melhorias na perfomance do aplicativo.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 9.4</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Versão Dark com as cores cinza escuro.
+• Corrigido um bug que se abria um perfil de um jogador na tela de confirmação e dps escolher outro jogador para ver o perfil, mostrava o jogador de antes. agora tem q abrir um novo perfil a cada 2s, para limpar os dados do perfil anterior que foi aberto. e também por causa em foco de atualização dos jogadores a cada 1s.
+• Melhorias na perfomance do aplicativo.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 9.3</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Tela de confirmação de sala em atualização a cada 1s.
+• Status de vagas.
+• Melhorias nas salas na versão LITE.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 9.1</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• As vagas estão visiveis na tela de confirmação.
+• Tela de confirmação agora em atualização a cada 1s.
+• Melhorias nas salas.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 9.0</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Correção de bug na lista de salas
+• Melhorias nas cores
+• Correção de bugs menores</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 8.9</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Novo Link do site
+• Melhorias de desempenho
+• Correção de bugs menores</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 8.8</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Novos temas adicionados
+• Melhorias de desempenho
+• Correção de bugs menores</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Versão 8.7</h3>
+            <p style="white-space: pre-wrap; color: var(--text-dim); margin-top: 10px;">• Interface renovada
+• Novo sistema de cores
+• Otimização geral</p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h1 style="text-align: center;">Contato & Suporte</h1>
+        <p style="text-align: center; margin-bottom: 20px;">Tem dúvidas, encontrou um bug, quer dar feedback ou sugerir algo novo? Fale diretamente comigo pelo Discord.</p>
+
+        <div class="contact-grid">
+            <div class="contact-card">
+                <i class="fab fa-discord"></i>
+                <h3>Discord Direto</h3>
+                <p>Me chame no Discord para suporte rápido, reportar problemas ou tirar dúvidas sobre os mods.</p>
+                <div class="discord-tag">
+                    <i class="fas fa-user"></i>
+                    <span id="discord-user">inpune</span>
+                </div>
+                <br>
+                <button class="copy-btn" onclick="copyDiscord()">
+                    <i class="fas fa-copy"></i> Copiar usuário
+                </button>
+            </div>
+
+            <div class="contact-card">
+                <i class="fas fa-bug"></i>
+                <h3>Reportar Bugs</h3>
+                <p>Se algo não estiver funcionando, descreva o erro, a versão do mod e seu dispositivo. Isso ajuda a corrigir mais rápido.</p>
+                <p style="color: var(--accent-light); font-weight: 600; margin-bottom: 0;">Discord: inpune</p>
+            </div>
+
+            <div class="contact-card">
+                <i class="fas fa-lightbulb"></i>
+                <h3>Feedbacks & Sugestões</h3>
+                <p>Ideias para novos temas, recursos ou melhorias de usabilidade são sempre bem-vindas. Mande sua sugestão!</p>
+                <p style="color: var(--accent-light); font-weight: 600; margin-bottom: 0;">Discord: inpune</p>
+            </div>
+        </div>
+
+        <div class="banner banner-update" style="margin-top: 28px;">
+            <h3>📌 Importante</h3>
+            <p>Antes de chamar, confira o <a href="javascript:void(0)" onclick="showSection('faqs')" style="color: #fff; font-weight: 700; text-decoration: underline;">FAQ</a> e o <a href="javascript:void(0)" onclick="showSection('changelog')" style="color: #fff; font-weight: 700; text-decoration: underline;">Changelog</a>. Muitas dúvidas já estão respondidas lá.</p>
+        </div>
+    </section>
+</main>
+
+<div class="developer-watermark">
+    <i class="fas fa-code"></i> Desenvolvido por Inpune
+</div>
+
+<div id="imagePopup" class="popup" onclick="this.style.display='none'">
+    <img id="popupImage" src="" alt="Popup Image">
+</div>
+
+<button id="scrollTopBtn" class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Voltar ao topo">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<div id="toast" class="toast">Usuário copiado!</div>
+
+<script>
+function toggleNav() {
+    document.querySelector('.sidebar')?.classList.toggle('active');
+    document.querySelectorAll('.nav-toggle span').forEach(span => {
+        span.classList.toggle('active');
+    });
+}
+
+function showSection(sectionId) {
+    document.querySelectorAll('.content section').forEach(section => {
+        section.classList.remove('active');
+    });
+
+    document.getElementById(sectionId)?.classList.add('active');
+
+    const basePath = window.location.href.includes('uploadinto.github.io/gtreup/')
+        ? '/gtreup/#'
+        : '/#';
+
+    window.history.pushState({}, '', basePath + sectionId);
+    window.scrollTo(0, 0);
+
+    if (window.innerWidth <= 768) {
+        document.querySelector('.sidebar')?.classList.remove('active');
+    }
+}
+
+function showPopup(src) {
+    const popup = document.getElementById('imagePopup');
+    const popupImg = document.getElementById('popupImage');
+
+    if (popup && popupImg) {
+        popupImg.src = src;
+        popup.style.display = 'flex';
+    }
+}
+
+function updateDownloadsCount(releases) {
+    const downloadsDiv = document.querySelector('#downloads-count');
+    if (!downloadsDiv) return;
+
+    let totalDownloads = 4291;
+
+    releases.forEach(release => {
+        if (!Array.isArray(release.assets)) return;
+
+        release.assets.forEach(asset => {
+            totalDownloads += asset.download_count || 0;
+        });
+    });
+
+    downloadsDiv.innerHTML =
+        `<i class="fas fa-cloud-download-alt"></i> ${totalDownloads.toLocaleString()} downloads`;
+}
+
+function renderReleaseData(releases) {
+    if (!Array.isArray(releases) || !releases.length) {
+        throw new Error('Nenhuma versão disponível');
+    }
+
+    const latestRelease = releases.find(release => !release.draft && !release.prerelease);
+    if (!latestRelease) {
+        throw new Error('Nenhuma versão válida disponível');
+    }
+
+    const updateTitle = document.getElementById('update-title');
+    const updateDesc = document.getElementById('update-desc');
+
+    if (updateTitle && updateDesc) {
+        const title = latestRelease.name || latestRelease.tag_name || '';
+        const versionValue = title.split(' ').pop();
+
+        updateTitle.textContent = versionValue
+            ? `🎉 Versão ${versionValue} Lançada!`
+            : '🎉 Nova atualização lançada!';
+
+        updateDesc.textContent = latestRelease.body
+            ? latestRelease.body.split('\n').find(line => line.trim()) || 'Melhorias e novos recursos.'
+            : 'Melhorias e novos recursos.';
+    }
+
+    let changelogHTML = '';
+
+    releases.forEach(release => {
+        const title = release.name || release.tag_name || '';
+        const versionValue = title.split(' ').pop();
+        const versionNumber = parseFloat(versionValue.replace(/[^\d.]/g, ''));
+
+        if (!Number.isNaN(versionNumber) && versionNumber > 151.0) {
+            const item = document.createElement('div');
+            item.className = 'faq-item';
+
+            const heading = document.createElement('h3');
+            heading.textContent = `Versão ${versionValue}`;
+
+            const body = document.createElement('p');
+            body.style.whiteSpace = 'pre-wrap';
+            body.style.color = 'var(--text-dim)';
+            body.style.marginTop = '10px';
+            body.textContent = release.body || '';
+
+            item.append(heading, body);
+            changelogHTML += item.outerHTML;
+        }
+    });
+
+    const dynamicChangelog = document.getElementById('dynamic-changelog');
+    if (dynamicChangelog) dynamicChangelog.innerHTML = changelogHTML;
+
+    const modMapping = {
+        'Garticr_SV-SITE': { name: 'Mod Original (Site)', class: 'btn-original', type: 'site' },
+        'GarticrPRETO_SV-SITE': { name: 'Mod Preto (Site)', class: 'btn-true-black', type: 'site' },
+        'GarticrROXO_SV-SITE': { name: 'Mod Roxo (Site)', class: 'btn-purple', type: 'site' },
+        'GarticrCOLOR_SV-SITE': { name: 'Mod Color (Site)', class: 'btn-color', type: 'site' },
+        'GarticCLASSIC': { name: 'Mod Classic (Mobile)', class: 'btn-original', type: 'mobile' },
+        'GarticPRETO': { name: 'Mod Preto (Mobile)', class: 'btn-true-black', type: 'mobile' },
+        'GarticROXO': { name: 'Mod Roxo (Mobile)', class: 'btn-purple', type: 'mobile' },
+        'GarticCOLOR': { name: 'Mod Color (Mobile)', class: 'btn-color', type: 'mobile' },
+        'GarticAKATSUKI': { name: 'Mod Akatsuki (Mobile)', class: 'btn-akatsuki', type: 'mobile' }
+    };
+
+    const getVersionNumber = name => {
+        const match = name.match(/^(\d+\.\d+)/);
+        return match ? match[1] : '';
+    };
+
+    const siteMods = [];
+    const mobileMods = [];
+
+    (latestRelease.assets || []).forEach(asset => {
+        if (!asset.name?.endsWith('.apk')) return;
+
+        const cleanName = asset.name
+            .replace(/^\d+\.\d+-/, '')
+            .replace(/\.apk$/i, '');
+
+        const modInfo = modMapping[cleanName];
+        if (!modInfo) return;
+
+        const modData = {
+            name: modInfo.name,
+            class: modInfo.class,
+            downloads: asset.download_count || 0,
+            url: asset.browser_download_url,
+            version: getVersionNumber(asset.name),
+            type: modInfo.type
+        };
+
+        (modInfo.type === 'site' ? siteMods : mobileMods).push(modData);
+    });
+
+    siteMods.sort((a, b) => b.downloads - a.downloads);
+    mobileMods.sort((a, b) => b.downloads - a.downloads);
+
+    const container = document.getElementById('downloads-container');
+    if (!container) return;
+
+    const createGroup = (mods, title, iconClass, warning = '') => {
+        if (!mods.length) return '';
+
+        let html = `
+            <div style="width: 100%; text-align: center; margin: 30px 0 15px; color: var(--accent-light); font-weight: 800; font-size: 1.4em; text-transform: uppercase;">
+                <i class="${iconClass}"></i> ${title}
+            </div>
+        `;
+
+        if (warning) {
+            html += `
+                <p style="text-align: center; color: #ff6b6b; margin-bottom: 20px; font-weight: 600; background: rgba(255, 107, 107, 0.1); padding: 10px; border-radius: 8px;">
+                    ${warning}
+                </p>
+            `;
+        }
+
+        mods.forEach(mod => {
+            html += `
+                <div class="download-item">
+                    <h2>${mod.name}</h2>
+                    <div class="download-buttons">
+                        <a href="${mod.url}" class="download-btn ${mod.class}" download>
+                            BAIXAR${mod.version ? `<br><span>Versão ${mod.version}</span>` : ''}
+                        </a>
+                    </div>
+                    <div class="download-count">
+                        <i class="fas fa-arrow-down"></i> ${mod.downloads.toLocaleString()} downloads
+                    </div>
+                </div>
+            `;
+        });
+
+        return html;
+    };
+
+    const html =
+        createGroup(siteMods, 'Versões Site (Servidor Gartic.com.br)', 'fas fa-globe') +
+        createGroup(
+            mobileMods,
+            'Versões Mobile (Servidor m.gartic.net)',
+            'fas fa-mobile-alt',
+            '⚠️ Versões Mobile possuem menos recursos, mas são compatíveis com o servidor original do app'
+        );
+
+    container.innerHTML = html || '<p class="no-mods">Nenhum mod disponível no momento.</p>';
+}
+
+async function loadSiteData() {
+    const downloadsDiv = document.querySelector('#downloads-count');
+    const container = document.getElementById('downloads-container');
+
+    try {
+        const response = await fetch('https://api.github.com/repos/archivg/tgc/releases', {
+            headers: { Accept: 'application/vnd.github+json' }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Falha ao carregar dados (${response.status})`);
+        }
+
+        const releases = await response.json();
+
+        updateDownloadsCount(releases);
+        renderReleaseData(releases);
+    } catch (error) {
+        console.error('Erro ao carregar dados do site:', error);
+
+        if (downloadsDiv) downloadsDiv.textContent = 'Indisponível no momento';
+
+        if (container) {
+            container.innerHTML =
+                '<p class="no-mods">Não foi possível carregar os downloads agora. Tente recarregar a página.</p>';
+        }
+
+        const updateDesc = document.getElementById('update-desc');
+        if (updateDesc) {
+            updateDesc.textContent = 'Não foi possível carregar as informações da atualização.';
+        }
+    }
+}
+
+function copyDiscord() {
+    const user = document.getElementById('discord-user')?.textContent || 'inpune';
+
+    if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(user)
+            .then(() => showToast('Usuário do Discord copiado!'));
+        return;
+    }
+
+    const temp = document.createElement('textarea');
+    temp.value = user;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand('copy');
+    temp.remove();
+    showToast('Usuário do Discord copiado!');
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2600);
+}
+
+function updateActiveLink() {
+    const hash = window.location.hash.replace('/gtreup/', '').slice(1) || 'home';
+
+    document.querySelectorAll('.sidebar a').forEach(link => {
+        const match = link.getAttribute('onclick')?.match(/showSection\('(.+)'\)/);
+        link.classList.toggle('active-link', match && match[1] === hash);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const rawHash = window.location.hash;
+    const hash = rawHash.replace('/gtreup/', '').slice(1) || 'home';
+
+    showSection(hash);
+    updateActiveLink();
+    loadSiteData();
+
+    document.querySelectorAll('.sidebar a').forEach(link => {
+        link.addEventListener('click', event => {
+            event.preventDefault();
+
+            const match = link.getAttribute('onclick')?.match(/showSection\('(.+)'\)/);
+            if (match?.[1]) {
+                showSection(match[1]);
+                document.querySelector('.sidebar')?.classList.remove('active');
+            }
+        });
+    });
+});
+
+window.addEventListener('popstate', () => {
+    const rawHash = window.location.hash;
+    const hash = rawHash.replace('/gtreup/', '').slice(1) || 'home';
+    showSection(hash);
+    updateActiveLink();
+});
+
+document.addEventListener('click', event => {
+    const sidebar = document.querySelector('.sidebar');
+    const navToggle = document.querySelector('.nav-toggle');
+
+    if (
+        sidebar &&
+        navToggle &&
+        !sidebar.contains(event.target) &&
+        !navToggle.contains(event.target) &&
+        sidebar.classList.contains('active')
+    ) {
+        toggleNav();
+    }
+});
+
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => {
+    if (!scrollTopBtn) return;
+    scrollTopBtn.classList.toggle('show', window.scrollY > 320);
+});
+</script>
+
+</body>
+</html>
