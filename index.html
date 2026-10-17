@@ -745,7 +745,7 @@ function atualizarContagemDownloads(versoes) {
     const contadorDownloads = document.querySelector('#downloads-count');
     if (!contadorDownloads) return;
 
-    let totalDownloads = 17891; // dados recuperados após o reset do repo
+    let totalDownloads = 0; // dados recuperados após o reset do repo
 
     versoes.forEach(versao => {
         if (!Array.isArray(versao.assets)) return;
