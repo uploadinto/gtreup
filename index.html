@@ -448,28 +448,38 @@ function atualizarContagemDownloads(versoes) {
     const contadorDownloads = document.querySelector('#downloads-count');
     if (!contadorDownloads) return;
 
-    let totalDownloads = 32524; // dados recuperados após o reset do repo
+    let totalDownloads = 32524; // total anterior ao reset do repositório GitHub
 
     versoes.forEach(versao => {
         if (!Array.isArray(versao.assets)) return;
 
         versao.assets.forEach(arquivo => {
-            totalDownloads += arquivo.download_count || 0;
+            if (arquivo.name && /\.apk$/i.test(arquivo.name)) {
+                totalDownloads += Number(arquivo.download_count) || 0;
+            }
         });
     });
 
     contadorDownloads.innerHTML =
-        `<i class="fas fa-cloud-download-alt"></i> ${totalDownloads.toLocaleString()} downloads`;
+        `<i class="fas fa-cloud-download-alt"></i> ${totalDownloads.toLocaleString('pt-BR')} downloads`;
 }
 
 function renderizarVersoes(versoes) {
-    if (!Array.isArray(versoes) || !versoes.length) {
-        throw new Error('Nenhuma versão disponível');
+    if (!Array.isArray(versoes)) {
+        throw new Error('Resposta de releases inválida');
     }
 
     const ultimaVersao = versoes.find(versao => !versao.draft && !versao.prerelease);
     if (!ultimaVersao) {
-        throw new Error('Nenhuma versão válida disponível');
+        const titulo = document.getElementById('update-title');
+        const descricao = document.getElementById('update-desc');
+        const historico = document.getElementById('dynamic-changelog');
+        const recipiente = document.getElementById('downloads-container');
+        if (titulo) titulo.textContent = 'Nenhuma atualização disponível';
+        if (descricao) descricao.textContent = 'Nenhuma release publicada no GitHub no momento.';
+        if (historico) historico.innerHTML = '';
+        if (recipiente) recipiente.innerHTML = '<p class="no-mods">Nenhum mod disponível no momento.</p>';
+        return;
     }
 
     const tituloAtualizacao = document.getElementById('update-title');
@@ -537,7 +547,7 @@ function renderizarVersoes(versoes) {
     const modsCelular = [];
 
     (ultimaVersao.assets || []).forEach(arquivo => {
-        if (!arquivo.name?.endsWith('.apk')) return;
+        if (!arquivo.name || !/\.apk$/i.test(arquivo.name)) return;
 
         const nomeLimpo = arquivo.name
             .replace(/^\d+\.\d+-/, '')
